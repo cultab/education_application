@@ -1,43 +1,46 @@
-from unicodedata import name
-from PyQt5.QtWidgets import *
+#!/usr/bin/env python3
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout
+
 
 def Lessons():
-    """This is the event handler for the button Μαθήματα
+    """Event handler for the button Μαθήματα.
 
     Args:
         None
 
     Returns:
-        Nothing 
-    
+        Nothing
+
     """
     alert = QMessageBox()
     alert.setText('You clicked Μαθήματα!')
     alert.exec()
 
+
 def Exercises():
-    """This is the event handler for the button Ασκήσεις
+    """Event handler for the button Ασκήσεις.
 
     Args:
         None
 
     Returns:
-        Nothing 
-    
+        Nothing
+
     """
     alert = QMessageBox()
     alert.setText('You clicked Ασκήσεις!')
     alert.exec()
 
+
 def Statistics():
-    """This is the event handler for the button Στατιστικά
+    """Event handler for the button Στατιστικά.
 
     Args:
         None
 
     Returns:
-        Nothing 
-    
+        Nothing
+
     """
     alert = QMessageBox()
     alert.setText('You clicked Στατιστικά!')
@@ -50,8 +53,8 @@ def Exit():
         None
 
     Returns:
-        Nothing 
-    
+        Nothing
+
     """
     alert = QMessageBox()
     alert.setText('You clicked Έξοδος!')
@@ -59,14 +62,13 @@ def Exit():
 
 
 def FirstWindow() -> QWidget:
-    """Returns The First Window a User sees in the application
+    """Return The First Window a user sees in the application.
 
     Args:
         None
-    
+
     Returns:
         QWidget: The QWidget that is to be shown in the QApplication
-    
     """
     window = QWidget()
 
@@ -87,7 +89,6 @@ def FirstWindow() -> QWidget:
     window.setLayout(layout)
 
     return window
-
 
 
 def main():
