@@ -12,6 +12,7 @@ class FirstWindow(QWidget) :
     Returns:
         QWidget: The QWidget that is to be shown in the QApplication
     """
+
     def Lessons(self):
         """Event handler for the button Μαθήματα.
 
@@ -25,8 +26,8 @@ class FirstWindow(QWidget) :
         
         
 
-    def Exercises(self):
-        """Event handler for the button Ασκήσεις.
+    def Exercises(self): ############# TO DO FIX BACK BUTTON ##########################
+        """Event handler for the button Ασκήσεις. Create a new Layout giving the choice between 3 sets of excercises
 
         Args:
             None
@@ -35,12 +36,49 @@ class FirstWindow(QWidget) :
             Nothing
 
         """
+
+        layout = QVBoxLayout()
+        button = QPushButton('Ασκήσεις Μαθήματος 1')
+        button.clicked.connect(self.Exercises1)
+        layout.addWidget(button)
+        button = QPushButton('Ασκήσεις Μαθήματος 2')
+        button.clicked.connect(self.Exercises2)
+        layout.addWidget(button)
+        button = QPushButton('Ασκήσεις Μαθήματος 3')
+        button.clicked.connect(self.Exercises3)
+        layout.addWidget(button)
+        button = QPushButton('Πίσω')
+        button.clicked.connect(self.Back)
+        layout.addWidget(button)
+
+        self.prevLayout = self.layout()
+        QWidget().setLayout(self.layout())
+        self.setLayout(layout)
+
+    def Exercises1(self):
+        """
+        """
+
+
+    def Exercises2(self):
+        """
+        """
+
+
+    def Exercises3(self):
+        """Event handler for the button Ασκήσεις. Sets the imported "MultipleChoiceLayout" as the Layout
+
+        """
+
         question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
         question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
         question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
         question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
-
+        
+        self.prevLayout = self.layout()
+        QWidget().setLayout(self.layout())
         self.setLayout(MultipleChoiceLayout([question1, question2, question3, question4]))
+        
 
 
     def Statistics():
@@ -70,6 +108,19 @@ class FirstWindow(QWidget) :
         alert = QMessageBox()
         alert.setText('You clicked Έξοδος!')
         alert.exec()
+
+    def Back(self):
+        """Event handler for the button Πίσω. Sets the previous Layout as the one active
+
+        Args:
+            None
+
+        Returns:
+            Nothing 
+
+        """
+        QWidget().setLayout(self.layout())
+        self.setLayout(self.prevLayout)
 
 
     def __init__(self):
