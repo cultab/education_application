@@ -13,25 +13,33 @@ class MultipleChoiceQuestion():
         self.choices = ch
         self.correct = cor
 
+    def __repr__(self):
+        """Return string representation."""
+        return f"{self.prompt} {self.choices} -> {self.choices[self.correct]}"
 
-class MultipleChoiceQuestionWidget(QVBoxLayout):
+
+class MultipleChoiceQuestionWidget(QWidget):
     """Multiple choice question widget."""
 
     def __init__(self, question: MultipleChoiceQuestion):
         """Init."""
-        self.size = 2
-
         super().__init__()
-        self.addWidget(QLabel(question.prompt))
+
+        self.size = 2
+        box = QVBoxLayout()
+
+        self.setLayout(box)
+
+        box.addWidget(QLabel(question.prompt))
 
         grid = QGridLayout()
-        self.addLayout(grid)
+        box.addLayout(grid)
 
         for i, choice in enumerate(question.choices):
             grid.addWidget(QRadioButton(choice), i - (i % self.size), i % self.size)
 
 
-class MultipleChoiceContainer(QVBoxLayout):
+class MultipleChoiceLayout(QVBoxLayout):
     """Multiple choice ."""
 
     def __init__(self, questions: list[MultipleChoiceQuestion]):
@@ -41,10 +49,15 @@ class MultipleChoiceContainer(QVBoxLayout):
         self.questions = questions
         self.currentQuestion = 0
 
-        # init first question
-        self.currentQuestionWidget = QWidget()
-        self.currentQuestionWidget.setLayout(MultipleChoiceQuestionWidget(self.questions[self.currentQuestion]))
-        self.addWidget(self.currentQuestionWidget)
+        # add questions and hide them
+        for question in questions:
+            print(question)
+            new = MultipleChoiceQuestionWidget(question)
+            new.hide()
+            self.addWidget(new)
+
+        # show the first one
+        self.itemAt(0).widget().show()
 
         # add next and prev buttons
         buttons = QHBoxLayout()
@@ -61,42 +74,24 @@ class MultipleChoiceContainer(QVBoxLayout):
 
     def goto_next(self):
         """Handle going to next question."""
-        print("next")
         if self.currentQuestion + 1 < len(self.questions):
+            self.itemAt(self.currentQuestion).widget().hide()
             self.currentQuestion += 1
-            self.goto_current()
+            self.itemAt(self.currentQuestion).widget().show()
         else:
             print("Last question reached.")
 
-        print(self.currentQuestion)
-
     def goto_prev(self):
         """Handle going to previous question."""
-        print("prev")
         if self.currentQuestion - 1 >= 0:
+            self.itemAt(self.currentQuestion).widget().hide()
             self.currentQuestion -= 1
-            self.goto_current()
+            self.itemAt(self.currentQuestion).widget().show()
         else:
             print("First question reached.")
 
-        print(self.currentQuestion)
 
-    def goto_current(self):
-        """Show the question corresponding to @self.currentQuestion."""
-        old = self.currentQuestionWidget
-        new = QWidget()
-
-        # set new widgets content to a new MultipleChoiceQuestionWidget
-        new.setLayout(MultipleChoiceQuestionWidget(self.questions[self.currentQuestion]))
-        # replace the old with the new
-        self.replaceWidget(old, new)
-        # close the old
-        old.hide()
-        # update current
-        self.currentQuestionWidget = new
-
-
-def main():
+def test():
     """Entry."""
     app = QApplication([])
     window = QWidget()
@@ -106,11 +101,11 @@ def main():
     question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
     question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
 
-    window.setLayout(MultipleChoiceContainer([question1, question2, question3, question4]))
+    window.setLayout(MultipleChoiceLayout([question1, question2, question3, question4]))
 
     window.show()
     app.exec()
 
 
 if __name__ == "__main__":
-    main()
+    test()
