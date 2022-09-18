@@ -1,6 +1,63 @@
 from unicodedata import name
 from PyQt5.QtWidgets import *
 
+def Lessons():
+    """This is the event handler for the button Μαθήματα
+
+    Args:
+        None
+
+    Returns:
+        Nothing 
+    
+    """
+    alert = QMessageBox()
+    alert.setText('You clicked Μαθήματα!')
+    alert.exec()
+
+def Exercises():
+    """This is the event handler for the button Ασκήσεις
+
+    Args:
+        None
+
+    Returns:
+        Nothing 
+    
+    """
+    alert = QMessageBox()
+    alert.setText('You clicked Ασκήσεις!')
+    alert.exec()
+
+def Statistics():
+    """This is the event handler for the button Στατιστικά
+
+    Args:
+        None
+
+    Returns:
+        Nothing 
+    
+    """
+    alert = QMessageBox()
+    alert.setText('You clicked Στατιστικά!')
+    alert.exec()
+
+def Exit():
+    """This is the event handler for the button Έξοδος
+
+    Args:
+        None
+
+    Returns:
+        Nothing 
+    
+    """
+    alert = QMessageBox()
+    alert.setText('You clicked Έξοδος!')
+    alert.exec()
+
+
 def FirstWindow() -> QWidget:
     """Returns The First Window a User sees in the application
 
@@ -14,10 +71,18 @@ def FirstWindow() -> QWidget:
     window = QWidget()
 
     layout = QVBoxLayout()
-    layout.addWidget(QPushButton('Μαθήματα'))
-    layout.addWidget(QPushButton('Ασκήσεις'))
-    layout.addWidget(QPushButton('Στατιστικά'))
-    layout.addWidget(QPushButton('Έξοδος'))
+    button = QPushButton('Μαθήματα')
+    button.clicked.connect(Lessons)
+    layout.addWidget(button)
+    button = QPushButton('Ασκήσεις')
+    button.clicked.connect(Exercises)
+    layout.addWidget(button)
+    button = QPushButton('Στατιστικά')
+    button.clicked.connect(Statistics)
+    layout.addWidget(button)
+    button = QPushButton('Έξοδος')
+    button.clicked.connect(Exit)
+    layout.addWidget(button)
 
     window.setLayout(layout)
 
