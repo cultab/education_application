@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Education application."""
 
-from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow
 
 from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
 
 
-class FirstWindow(QWidget):
+class FirstWindow(QMainWindow):
     """Return The First Window a user sees in the application.
 
     Args:
@@ -26,6 +26,28 @@ class FirstWindow(QWidget):
             Nothing
 
         """
+
+    def Exercises1(self):
+        """"""
+
+    def Exercises3(self):
+        """"""
+
+    def Exercises2(self):
+        """"""
+
+    def Back(self):
+        """Event handler for the button Πίσω. Sets the previous Layout as the one active
+
+        Args:
+            None
+
+        Returns:
+            Nothing 
+
+        """
+        QWidget().setLayout(self.layout())
+        self.setLayout(self.prevLayout)
 
     def openExercises(self): ############# TO DO FIX BACK BUTTON ##########################
         """Event handler for the button Ασκήσεις.
@@ -52,9 +74,11 @@ class FirstWindow(QWidget):
         button.clicked.connect(self.Back)
         layout.addWidget(button)
 
-        self.prevLayout = self.layout()
-        QWidget().setLayout(self.layout())
-        self.setLayout(layout)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.centralWidget().addWidget(widget)
+        self.centralWidget().setCurrentWidget(widget)
 
     def openStatistics():
         """Event handler for the button Στατιστικά.
@@ -81,13 +105,10 @@ class FirstWindow(QWidget):
         """
         reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
-        match reply:
-            case QMessageBox.Yes:
+        if reply == QMessageBox.Yes:
                 self.close()
-            case QMessageBox.No:
-                pass
-            case _:
-                pass
+        elif reply == QMessageBox.No:
+                pass        
 
     def __init__(self):
         super().__init__()
@@ -106,7 +127,12 @@ class FirstWindow(QWidget):
         button.clicked.connect(self.exit)
         layout.addWidget(button)
 
-        self.setLayout(layout)
+        widget = QWidget()
+        widget.setLayout(layout)
+        stacked = QStackedWidget()
+        stacked.addWidget(widget)
+
+        self.setCentralWidget(stacked)
 
 
 def main():
