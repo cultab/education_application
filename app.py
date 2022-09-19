@@ -2,8 +2,9 @@
 """Education application."""
 
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow
-
+from sys import argv
 from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
+from Exercises import ExercisesWidget
 
 
 class FirstWindow(QMainWindow):
@@ -17,39 +18,9 @@ class FirstWindow(QMainWindow):
     """
 
     def openLessons(self):
-        """Event handler for the button Μαθήματα.
+        pass
 
-        Args:
-            None
-
-        Returns:
-            Nothing
-
-        """
-
-    def Exercises1(self):
-        """"""
-
-    def Exercises3(self):
-        """"""
-
-    def Exercises2(self):
-        """"""
-
-    def Back(self):
-        """Event handler for the button Πίσω. Sets the previous Layout as the one active
-
-        Args:
-            None
-
-        Returns:
-            Nothing 
-
-        """
-        QWidget().setLayout(self.layout())
-        self.setLayout(self.prevLayout)
-
-    def openExercises(self): ############# TO DO FIX BACK BUTTON ##########################
+    def openExercises(self):
         """Event handler for the button Ασκήσεις.
 
         Args:
@@ -60,49 +31,20 @@ class FirstWindow(QMainWindow):
 
         """
 
-        layout = QVBoxLayout()
-        button = QPushButton('Ασκήσεις Μαθήματος 1')
-        button.clicked.connect(self.Exercises1)
-        layout.addWidget(button)
-        button = QPushButton('Ασκήσεις Μαθήματος 2')
-        button.clicked.connect(self.Exercises2)
-        layout.addWidget(button)
-        button = QPushButton('Ασκήσεις Μαθήματος 3')
-        button.clicked.connect(self.Exercises3)
-        layout.addWidget(button)
-        button = QPushButton('Πίσω')
-        button.clicked.connect(self.Back)
-        layout.addWidget(button)
-
-
-        widget = QWidget()
-        widget.setLayout(layout)
+        widget = ExercisesWidget()
         self.centralWidget().addWidget(widget)
         self.centralWidget().setCurrentWidget(widget)
+# =======
+#         prevLayout = self.layout()
+#         QWidget().setLayout(self.layout())
+#         self.setLayout(ExercisesLayout(prevLayout))
 
     def openStatistics():
-        """Event handler for the button Στατιστικά.
-
-        Args:
-            None
-
-        Returns:
-            Nothing
-
-        """
         alert = QMessageBox()
         alert.setText('You clicked Στατιστικά!')
         alert.exec()
 
     def exit(self):
-        """Event handler for the button Έξοδος.
-
-        Args:
-            Nothing
-
-        Returns:
-            Nothing
-        """
         reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
@@ -114,6 +56,7 @@ class FirstWindow(QMainWindow):
         super().__init__()
 
         layout = QVBoxLayout()
+
         button = QPushButton('Μαθήματα')
         button.clicked.connect(self.openLessons)
         layout.addWidget(button)
@@ -136,7 +79,7 @@ class FirstWindow(QMainWindow):
 
 
 def main():
-    app = QApplication([])
+    app = QApplication(argv)
     window = FirstWindow()
     window.show()
     app.exec()
