@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QMainWindow, QStackedWidget
 from Question import QuestionWidget, MultipleChoiceQuestion
 
-from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
+from Question import MultipleChoiceLayout, MultipleChoiceQuestion
 
 
 class ExercisesWidget(QWidget):
