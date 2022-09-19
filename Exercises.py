@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QMainWindow, QStackedWidget
 
 
 class ExercisesWidget(QWidget):
@@ -21,15 +21,10 @@ class ExercisesWidget(QWidget):
         layout.addWidget(lesson3)
         layout.addWidget(back)
 
-        def goBack():
-            pass
-            # QWidget().setLayout(self.parent().layout())
-            # self.parent().setLayout(previousLayout)
-
         lesson1.clicked.connect(self.Exercises1)
         lesson2.clicked.connect(self.Exercises2)
         lesson3.clicked.connect(self.Exercises3)
-        back.clicked.connect(goBack)
+        back.clicked.connect(self.Back)
 
     def Exercises1(self):
         pass
@@ -41,4 +36,5 @@ class ExercisesWidget(QWidget):
         pass
 
     def Back(self):
-        pass
+        self.parentWidget().setCurrentIndex(0)
+        self.parentWidget().removeWidget(self.parentWidget().widget(1))

@@ -34,10 +34,7 @@ class FirstWindow(QMainWindow):
         widget = ExercisesWidget()
         self.centralWidget().addWidget(widget)
         self.centralWidget().setCurrentWidget(widget)
-# =======
-#         prevLayout = self.layout()
-#         QWidget().setLayout(self.layout())
-#         self.setLayout(ExercisesLayout(prevLayout))
+        
 
     def openStatistics():
         alert = QMessageBox()
