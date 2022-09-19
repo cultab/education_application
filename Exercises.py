@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QMainWindow, QStackedWidget
+from Question import QuestionWidget, MultipleChoiceQuestion
 
 from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
 
@@ -29,16 +30,16 @@ class ExercisesWidget(QWidget):
         back.clicked.connect(self.Back)
 
     def Exercises1(self):
-        """"""
+        """First set of exercises."""
+        question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
+        question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
+        question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
+        question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
 
-        # question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
-        # question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
-        # question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
-        # question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
-        # widget = QWidget()
-        # widget.setLayout(MultipleChoiceLayout([question1, question2, question3, question4]))
-        # self.parentWidget().addWidget(widget)
-        # self.parentWidget().setCurrentWidget(widget)
+        stack = self.parentWidget()
+        question = QuestionWidget([question1, question2, question3, question4])
+        stack.addWidget(question)
+        stack.setCurrentWidget(question)
 
     def Exercises2(self):
         pass
@@ -47,7 +48,10 @@ class ExercisesWidget(QWidget):
         pass
 
     def Back(self):
-        print(self.parentWidget().currentIndex())
-        old_widget = self.parentWidget().currentWidget()
-        self.parentWidget().setCurrentIndex(self.parentWidget().currentIndex() -1 )
-        self.parentWidget().removeWidget(old_widget)
+        """Go back to main page."""
+        parent = self.parentWidget()
+
+        print(parent.currentIndex())
+        old_widget = parent.currentWidget()
+        parent.setCurrentIndex(parent.currentIndex() - 1)
+        parent.removeWidget(old_widget)

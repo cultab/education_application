@@ -3,7 +3,6 @@
 
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow
 from sys import argv
-from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
 from Exercises import ExercisesWidget
 
 
@@ -45,9 +44,9 @@ class FirstWindow(QMainWindow):
         reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
-                self.close()
+            self.close()
         elif reply == QMessageBox.No:
-                pass        
+            pass
 
     def __init__(self):
         super().__init__()
