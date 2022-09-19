@@ -36,5 +36,7 @@ class ExercisesWidget(QWidget):
         pass
 
     def Back(self):
-        self.parentWidget().setCurrentIndex(0)
-        self.parentWidget().removeWidget(self.parentWidget().widget(1))
+        print(self.parentWidget().currentIndex())
+        widget = self.parentWidget().currentWidget()
+        self.parentWidget().setCurrentIndex(self.parentWidget().currentIndex() -1 )
+        self.parentWidget().removeWidget(widget)
