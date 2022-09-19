@@ -1,111 +1,120 @@
-#!/usr/bin/env python
-"""Multiple choice questions."""
+#!/usr/bin/env python3
+"""Education application."""
 
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout
 
-
-class MultipleChoiceQuestion():
-    """A multiple choice question."""
-
-    def __init__(self, p, ch, cor):
-        """."""
-        self.prompt = p
-        self.choices = ch
-        self.correct = cor
-
-    def __repr__(self):
-        """Return string representation."""
-        return f"{self.prompt} {self.choices} -> {self.choices[self.correct]}"
+from MultipleChoice import MultipleChoiceLayout, MultipleChoiceQuestion
 
 
-class MultipleChoiceQuestionWidget(QWidget):
-    """Multiple choice question widget."""
+class FirstWindow(QWidget):
+    """Return The First Window a user sees in the application.
 
-    def __init__(self, question: MultipleChoiceQuestion):
-        """Init."""
+    Args:
+        None
+
+    Returns:
+        QWidget: The QWidget that is to be shown in the QApplication
+    """
+
+    def openLessons(self):
+        """Event handler for the button Μαθήματα.
+
+        Args:
+            None
+
+        Returns:
+            Nothing
+
+        """
+
+    def openExercises(self): ############# TO DO FIX BACK BUTTON ##########################
+        """Event handler for the button Ασκήσεις.
+
+        Args:
+            None
+
+        Returns:
+            Nothing
+
+        """
+
+        layout = QVBoxLayout()
+        button = QPushButton('Ασκήσεις Μαθήματος 1')
+        button.clicked.connect(self.Exercises1)
+        layout.addWidget(button)
+        button = QPushButton('Ασκήσεις Μαθήματος 2')
+        button.clicked.connect(self.Exercises2)
+        layout.addWidget(button)
+        button = QPushButton('Ασκήσεις Μαθήματος 3')
+        button.clicked.connect(self.Exercises3)
+        layout.addWidget(button)
+        button = QPushButton('Πίσω')
+        button.clicked.connect(self.Back)
+        layout.addWidget(button)
+
+        self.prevLayout = self.layout()
+        QWidget().setLayout(self.layout())
+        self.setLayout(layout)
+
+    def openStatistics():
+        """Event handler for the button Στατιστικά.
+
+        Args:
+            None
+
+        Returns:
+            Nothing
+
+        """
+        alert = QMessageBox()
+        alert.setText('You clicked Στατιστικά!')
+        alert.exec()
+
+    def exit(self):
+        """Event handler for the button Έξοδος.
+
+        Args:
+            Nothing
+
+        Returns:
+            Nothing
+        """
+        reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+        match reply:
+            case QMessageBox.Yes:
+                self.close()
+            case QMessageBox.No:
+                pass
+            case _:
+                pass
+
+    def __init__(self):
         super().__init__()
 
-        self.size = 2
-        box = QVBoxLayout()
+        layout = QVBoxLayout()
+        button = QPushButton('Μαθήματα')
+        button.clicked.connect(self.openLessons)
+        layout.addWidget(button)
+        button = QPushButton('Ασκήσεις')
+        button.clicked.connect(self.openExercises)
+        layout.addWidget(button)
+        button = QPushButton('Στατιστικά')
+        button.clicked.connect(self.openStatistics)
+        layout.addWidget(button)
+        button = QPushButton('Έξοδος')
+        button.clicked.connect(self.exit)
+        layout.addWidget(button)
 
-        self.setLayout(box)
-
-        box.addWidget(QLabel(question.prompt))
-
-        grid = QGridLayout()
-        box.addLayout(grid)
-
-        for i, choice in enumerate(question.choices):
-            grid.addWidget(QRadioButton(choice), i - (i % self.size), i % self.size)
-
-
-class MultipleChoiceLayout(QVBoxLayout):
-    """Multiple choice ."""
-
-    def __init__(self, questions: list[MultipleChoiceQuestion]):
-        """Init."""
-        super().__init__()
-
-        self.questions = questions
-        self.currentQuestion = 0
-
-        # add questions and hide them
-        for question in questions:
-            print(question)
-            new = MultipleChoiceQuestionWidget(question)
-            new.hide()
-            self.addWidget(new)
-
-        # show the first one
-        self.itemAt(0).widget().show()
-
-        # add next and prev buttons
-        buttons = QHBoxLayout()
-        self.addLayout(buttons)
-
-        next = QPushButton("Επόμενη")
-        prev = QPushButton("Προηγούμενη")
-        buttons.addWidget(prev)
-        buttons.addWidget(next)
-
-        # add handlers
-        next.clicked.connect(self.goto_next)
-        prev.clicked.connect(self.goto_prev)
-
-    def goto_next(self):
-        """Handle going to next question."""
-        if self.currentQuestion + 1 < len(self.questions):
-            self.itemAt(self.currentQuestion).widget().hide()
-            self.currentQuestion += 1
-            self.itemAt(self.currentQuestion).widget().show()
-        else:
-            print("Last question reached.")
-
-    def goto_prev(self):
-        """Handle going to previous question."""
-        if self.currentQuestion - 1 >= 0:
-            self.itemAt(self.currentQuestion).widget().hide()
-            self.currentQuestion -= 1
-            self.itemAt(self.currentQuestion).widget().show()
-        else:
-            print("First question reached.")
+        self.setLayout(layout)
 
 
-def test():
-    """Entry."""
+def main():
     app = QApplication([])
-    window = QWidget()
-
-    question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
-    question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
-    question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
-    question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
-
-    window.setLayout(MultipleChoiceLayout([question1, question2, question3, question4]))
-
+    window = FirstWindow()
     window.show()
     app.exec()
 
 
-if __name__ == "__main__":
-    test()
+if __name__ == '__main__':
+    main()
