@@ -40,13 +40,23 @@ class ExercisesWidget(QWidget):
         stack.setCurrentWidget(question)
 
     def Exercises2(self):
+        """TBD"""
         pass
 
     def Exercises3(self):
+        """TBD"""
         pass
 
     def Back(self):
-        """Go back to main page."""
+        """Go back to main page. Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
+        
+        Args:
+            self: Mandatory
+
+        Returns:
+            Nothing
+        
+        """
         parent = self.parentWidget()
 
         print(parent.currentIndex())
