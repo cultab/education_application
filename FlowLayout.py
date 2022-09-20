@@ -47,7 +47,7 @@ class FlowLayout(QLayout):
         else:
             pass
 
-    def takeAt(self, index: int) -> QLayoutItem | None:
+    def takeAt(self, index: int) -> QLayoutItem:
         """Return and remove item from layout at index."""
         if index >= 0 and index < len(self.itemList):
             return self.itemList.pop(index)
