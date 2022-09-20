@@ -2,6 +2,8 @@
 """Education application."""
 
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow
+from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
+from PyQt5.QtCore import QUrl
 from sys import argv
 from Exercises import ExercisesWidget
 
@@ -22,7 +24,13 @@ class FirstWindow(QMainWindow):
 
         def openLessons():
             """TBD."""
-            pass
+            browser = QWebEngineView()
+            browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+            browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+            browser.setUrl(QUrl.fromLocalFile("/home/asimakis/Desktop/test.pdf"))
+            self.centralWidget().addWidget(browser)
+            self.centralWidget().setCurrentWidget(browser)
+
         button.clicked.connect(openLessons)
         layout.addWidget(button)
 
