@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Education application."""
 
-from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
 from PyQt5.QtCore import QUrl
 from sys import argv
@@ -27,8 +27,8 @@ class FirstWindow(QMainWindow):
             browser = QWebEngineView()
             browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
             browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
-            # browser.setUrl(QUrl.fromLocalFile("/home/asimakis/Desktop/test.pdf"))
-            browser.setUrl(QUrl.fromLocalFile("/home/evan/bestpapers-guide.pdf"))
+            browser.setUrl(QUrl.fromLocalFile("/home/asimakis/Desktop/test.pdf"))
+            # browser.setUrl(QUrl.fromLocalFile("/home/evan/bestpapers-guide.pdf"))
             self.centralWidget().addWidget(browser)
             self.centralWidget().setCurrentWidget(browser)
 
@@ -71,6 +71,14 @@ class FirstWindow(QMainWindow):
         stacked.addWidget(widget)
 
         self.setCentralWidget(stacked)
+
+        ##MenuBar
+        mainMenu = self.menuBar()
+        fileMenu = mainMenu.addMenu("File")
+        exitButton = QAction('Exit',self)
+        exitButton.triggered.connect(exit)
+        fileMenu.addAction(exitButton)
+
 
 
 def main():
