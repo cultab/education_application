@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 """Multiple choice questions."""
 
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QStackedWidget, QLayoutItem, QLineEdit
-from PyQt5.QtGui import QPalette
+from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QStackedWidget, QLineEdit
 
-from PyQt5.QtCore import Qt
-from functools import partial
 from re import sub
 from FlowLayout import FlowLayout
 
@@ -22,71 +19,75 @@ class FillBlankQuestion():
     answers.
     """
 
-    def __init__(self, prompt: str, text: str, answers: list[str]):
+    prompt: str
+    text: str
+    correct: list[str]
+    answers: list[str]
+
+    def __init__(self, prompt: str, text: str, correct: list[str]):
         """Initialize a FillBlankQuestion."""
         self.prompt = prompt
         self.text = text
-        self.answers = answers
+        self.correct = [str(x) for x in correct]  # convert to string
+        self.answers = list()
+
+    def __repr__(self):
+        """Return string representation."""
+        return f"{self.prompt=} {self.text=} {self.correct=} {self.answers=}"
 
 
 class FillBlankQuestionWidget(QWidget):
     """Fill in the blanks question widget."""
 
+    question: FillBlankQuestion
+    answers: list[QLineEdit]
+
     def __init__(self, question: FillBlankQuestion):
         """Initialize a FillBlankQuestionWidget."""
         super().__init__()
 
+        self.question = question
+        self.answers = list()
         layout = FlowLayout(0, 0, 0)
         self.setLayout(layout)
 
-        layout.addWidget(QLabel(question.prompt))
+        layout.addWidget(QLabel(self.question.prompt))
 
-        text = sub(r"\\&", "<ambersand>", question.text)
+        text = sub(r"\\&", "<ambersand>", self.question.text)
         print(text)
         texts = text.split(sep="&")
         print(texts)
 
-        # for text in texts[:-1]:
-        #     # create new widget with horizontal box layout
-        #     widget = QWidget()
-        #     sublayout = QHBoxLayout()
-        #     widget.setLayout(sublayout)
-        #
-        #     # add a label and lineedit to it
-        #     sublayout.addWidget(QLabel(text))
-        #     sublayout.addWidget(QLineEdit())
-        #
-        #     # add the new widget to the flow layout
-        #     layout.addWidget(widget)
         for text in texts[:-1]:
             t = QLabel(text)
             e = QLineEdit()
-            # pal1 = QPalette()
-            # pal2 = QPalette()
-            # pal1.setColor(QPalette.Window, Qt.red)
-            # pal2.setColor(QPalette.Window, Qt.blue)
-            # t.setAutoFillBackground(True)
-            # e.setAutoFillBackground(True)
-            #
-            # t.setPalette(pal1)
-            # e.setPalette(pal2)
-
+            self.answers.append(e)
             layout.addWidget(t)
             layout.addWidget(e)
 
-    def isCorrect(self) -> bool:
-        """Check if question is answered correctly."""
-        raise NotImplementedError
+    def getQuestion(self) -> FillBlankQuestion:
+        """Get answered question."""
+        answers = list()
+        for answer in self.answers:
+            answers.append(answer.text())
+        self.question.answers = answers
+        return self.question
 
 
 class MultipleChoiceQuestion():
     """A multiple choice question."""
+
+    prompt: str
+    choices: list[str]
+    correct: list[str]
+    answer: str
 
     def __init__(self, prompt: str, choices: list[str], correctChoice: str):
         """Initialize a MultipleChoiceQuestion."""
         self.prompt = prompt
         self.choices = choices
         self.correct = correctChoice
+        self.answer = ""
 
     def __repr__(self) -> str:
         """Return string representation."""
@@ -96,26 +97,40 @@ class MultipleChoiceQuestion():
 class MultipleChoiceQuestionWidget(QWidget):
     """Multiple choice question widget."""
 
+    question: MultipleChoiceQuestion
+    radio_buttons: list[QRadioButton]
+
     def __init__(self, question: MultipleChoiceQuestion):
         """Initialize a MultipleChoiceQuestionWidget."""
         super().__init__()
 
+        self.question = question
         self.size = 2
         box = QVBoxLayout()
 
         self.setLayout(box)
 
-        box.addWidget(QLabel(question.prompt))
+        box.addWidget(QLabel(self.question.prompt))
 
         grid = QGridLayout()
         box.addLayout(grid)
 
-        for i, choice in enumerate(question.choices):
-            grid.addWidget(QRadioButton(choice), i - (i % self.size), i % self.size)
+        self.radio_buttons = list()
 
-    def isCorrect(self) -> bool:
-        """Check if question is answered correctly."""
-        raise NotImplementedError
+        for i, choice in enumerate(self.question.choices):
+            radio = QRadioButton(choice)
+            grid.addWidget(radio, i - (i % self.size), i % self.size)
+            self.radio_buttons.append(radio)
+
+    def getQuestion(self) -> MultipleChoiceQuestion:
+        """Return answered question."""
+        answer = ""
+        for radio in self.radio_buttons:
+            if radio.isChecked():
+                answer = radio.text()
+        self.question.answer = answer
+
+        return self.question
 
 
 class QuestionWidget(QWidget):
@@ -159,41 +174,47 @@ class QuestionWidget(QWidget):
         buttons = QHBoxLayout()
         layout.addLayout(buttons)
 
-        next = QPushButton("Επόμενη")
-        prev = QPushButton("Προηγούμενη")
-        prev.setEnabled(False)
+        self.next = QPushButton("Επόμενη")
+        self.prev = QPushButton("Προηγούμενη")
+        self.prev.setEnabled(False)
 
-        buttons.addWidget(prev)
-        buttons.addWidget(next)
-
-        def goto_next(next, prev):
-            """Handle going to next question."""
-            stack: QStackedWidget = self.stack
-            if stack.currentIndex() + 1 < stack.count():
-                stack.setCurrentIndex(stack.currentIndex() + 1)
-                prev.setEnabled(True)
-
-            if not stack.currentIndex() + 1 < stack.count():
-                next.setEnabled(False)
-                print("Last question reached.")
-
-        def goto_prev(next, prev):
-            """Handle going to previous question."""
-            stack: QStackedWidget = self.stack
-            if stack.currentIndex() - 1 >= 0:
-                stack.setCurrentIndex(stack.currentIndex() - 1)
-                next.setEnabled(True)
-
-            if not stack.currentIndex() - 1 >= 0:
-                prev.setEnabled(False)
-                print("First question reached.")
-
-        n = partial(goto_next, next, prev)
-        p = partial(goto_prev, next, prev)
+        buttons.addWidget(self.prev)
+        buttons.addWidget(self.next)
 
         # add handlers
-        next.clicked.connect(n)
-        prev.clicked.connect(p)
+        self.next.clicked.connect(self.goto_next)
+        self.prev.clicked.connect(self.goto_prev)
+
+    def goto_next(self):
+        """Handle going to next question."""
+        stack: QStackedWidget = self.stack
+        if stack.currentIndex() + 1 < stack.count():
+            stack.setCurrentIndex(stack.currentIndex() + 1)
+            self.prev.setEnabled(True)
+
+        if not stack.currentIndex() + 1 < stack.count():
+            self.next.setText("Υποβολή")
+            self.next.clicked.connect(self.submit)
+
+    def goto_prev(self):
+        """Handle going to previous question."""
+        stack: QStackedWidget = self.stack
+        if stack.currentIndex() - 1 >= 0:
+            stack.setCurrentIndex(stack.currentIndex() - 1)
+            self.next.clicked.connect(self.goto_next)
+            self.next.setText("Επόμμενη")
+            self.next.setEnabled(True)
+
+        if not stack.currentIndex() - 1 >= 0:
+            self.prev.setEnabled(False)
+            print("First question reached.")
+
+    def submit(self):
+        """Submit answers."""
+        for i in range(self.stack.count()):
+            widget = self.stack.widget(i)
+            answered = widget.getQuestion()
+            print(answered)
 
 
 def test():
