@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Education application."""
 
-from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
-from PyQt5.QtCore import QUrl
+from ctypes import alignment
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction, QLabel
+from PyQt5.QtCore import Qt
 from sys import argv
 from Exercises import ExercisesWidget
 
+##test
 
 class FirstWindow(QMainWindow):
     """Main window."""
@@ -23,14 +24,11 @@ class FirstWindow(QMainWindow):
         button = QPushButton('Μαθήματα')
 
         def openLessons():
-            """TBD."""
-            browser = QWebEngineView()
-            browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-            browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
-            browser.setUrl(QUrl.fromLocalFile("/home/asimakis/Desktop/test.pdf"))
-            # browser.setUrl(QUrl.fromLocalFile("/home/evan/bestpapers-guide.pdf"))
-            self.centralWidget().addWidget(browser)
-            self.centralWidget().setCurrentWidget(browser)
+            """TBD."""    
+            viewer = QLabel("HELLO")
+            viewer.setAlignment(Qt.AlignCenter)
+            self.centralWidget().addWidget(viewer)
+            self.centralWidget().setCurrentWidget(viewer)
 
         button.clicked.connect(openLessons)
         layout.addWidget(button)
