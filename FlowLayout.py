@@ -1,12 +1,15 @@
 """Port of the qt6 cpp FlowLayout example."""
 
-from PyQt5.QtWidgets import QLayout, QLayoutItem, QStyle, QSizePolicy
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import QRect, QSize, QMargins, QPoint
+from PyQt5.QtCore import QMargins, QPoint, QRect, QSize, Qt
+from PyQt5.QtWidgets import (QLayout, QLayoutItem, QSizePolicy, QSpacerItem,
+                             QStyle)
 
 
 class FlowLayout(QLayout):
     """Layout that let's widgets rearrange themselves to fill the available space."""
+
+    class Spacer(int):
+        pass
 
     def __init__(self, margin=-1, hSpacing=-1, vSpacing=-1):
         """Initialize FlowLayout."""
@@ -101,6 +104,13 @@ class FlowLayout(QLayout):
             if spaceY == -1:
                 spaceY = wid.style().layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical)
 
+            match item:
+                case QSpacerItem():
+                    x = effectiveRect.x()
+                    y = y + lineHeight
+                    lineHeight = 0
+                    continue
+
             nextX = x + item.sizeHint().width() + spaceX
             if nextX - spaceX > effectiveRect.right() and lineHeight > 0:
                 x = effectiveRect.x()
@@ -125,3 +135,8 @@ class FlowLayout(QLayout):
             return parent.style().pixelMetric(pm, None, parent)
         else:
             return parent.spacing()
+
+    def newRow(self):
+        """Add a horizontal spacer forcing following widgets to a new row."""
+        self.itemList.append(QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Minimum))
+

@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """Education application."""
 
-from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction
 from sys import argv
+
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEngineView
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMenu,
+                             QMenuBar, QMessageBox, QPushButton,
+                             QStackedWidget, QVBoxLayout, QWidget)
+
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 
@@ -69,7 +75,7 @@ class FirstWindow(QMainWindow):
         self.setCentralWidget(stacked)
         self.setWindowTitle("TEST")
 
-        ##MenuBar
+        # MenuBar
         mainMenu = self.menuBar()
         fileMenu = mainMenu.addMenu("File")
         exitButton = QAction('Exit',self)

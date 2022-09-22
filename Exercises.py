@@ -1,5 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QGridLayout, QRadioButton, QLabel, QWidget, QHBoxLayout, QMainWindow, QStackedWidget
-from Question import QuestionWidget, MultipleChoiceQuestion, FillBlankQuestion
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+                             QMainWindow, QPushButton, QRadioButton,
+                             QStackedWidget, QVBoxLayout, QWidget)
+
+from Question import FillBlankQuestion, MultipleChoiceQuestion, QuestionWidget
 
 
 class ExercisesWidget(QWidget):
@@ -33,7 +36,7 @@ class ExercisesWidget(QWidget):
         question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
         question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
         question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
-        question5 = FillBlankQuestion("Fill in the blanks:", "1 + 1 = &2 + 2 = &4 + 4 = &", [2, 4, 8])
+        question5 = FillBlankQuestion("Fill in the blanks:", "1 + 1 =&" + "2 + 2 =&" + "4 + 4 =&", [2, 4, 8])
 
         stack = self.parentWidget()
         question = QuestionWidget([question5, question2, question3, question4, question1])

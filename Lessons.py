@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextDocument
+from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget
 
 
 class LessonsWidget(QWidget):
