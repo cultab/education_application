@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Education application."""
 
-from ctypes import alignment
-from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QApplication, QVBoxLayout, QStackedWidget, QMainWindow, QMenuBar, QMenu, QAction
 from sys import argv
 from Exercises import ExercisesWidget
+from Lessons import LessonsWidget
 
 ##test
 
@@ -25,8 +24,7 @@ class FirstWindow(QMainWindow):
 
         def openLessons():
             """TBD."""    
-            viewer = QLabel("HELLO")
-            viewer.setAlignment(Qt.AlignCenter)
+            viewer = LessonsWidget()
             self.centralWidget().addWidget(viewer)
             self.centralWidget().setCurrentWidget(viewer)
 
@@ -69,6 +67,7 @@ class FirstWindow(QMainWindow):
         stacked.addWidget(widget)
 
         self.setCentralWidget(stacked)
+        self.setWindowTitle("TEST")
 
         ##MenuBar
         mainMenu = self.menuBar()
