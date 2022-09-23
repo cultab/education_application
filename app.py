@@ -3,8 +3,6 @@
 
 from sys import argv
 
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEngineView
 from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMenu,
                              QMenuBar, QMessageBox, QPushButton,
                              QStackedWidget, QVBoxLayout, QWidget)
