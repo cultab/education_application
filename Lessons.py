@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextDocument
-from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout
 
 
 class LessonsWidget(QWidget):
@@ -14,12 +14,24 @@ class LessonsWidget(QWidget):
         viewer = QTextDocument()
 
 
-        viewer = QLabel("<h2>HTML Image</h2> <img src='/home/asimakis/Code/Digital\ Learning/education_application/pic_trulli.jpg' width='500' height='333'>")
+        viewer = QLabel("""<html>
+         <body> 
+         <h2>HTML Image</h2> 
+         <div>
+         <img src='pic_trulli.jpg' alt='Trulli' width='500' height='333'> 
+         </div>
+         </body> 
+         </html>""")
         viewer.setAlignment(Qt.AlignCenter)
 
         layout.addWidget(viewer)
 
-
+        horizontalbox = QHBoxLayout()
+        previous = QPushButton('Προηγούμενο')
+        next = QPushButton('Επόμενο')
+        horizontalbox.addWidget(previous)
+        horizontalbox.addWidget(next)
+        layout.addLayout(horizontalbox)
         back = QPushButton('Πίσω')
         layout.addWidget(back)
         back.clicked.connect(self.Back)
