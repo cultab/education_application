@@ -5,13 +5,14 @@ from sys import argv
 
 from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMenu,
                              QMenuBar, QMessageBox, QPushButton,
-                             QStackedWidget, QVBoxLayout, QWidget, QGraphicsDropShadowEffect)
+                             QStackedWidget, QVBoxLayout, QWidget)
 
 from PyQt5 import QtGui
 from PyQt5 import QtCore
 
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
+from MenuButton import MenuButton
 
 
 class FirstWindow(QMainWindow):
@@ -26,11 +27,7 @@ class FirstWindow(QMainWindow):
 
         layout = QVBoxLayout()
 
-        lessons = QPushButton('Μαθήματα')
-        lessons.setObjectName("lessons")
-        lessons.setFlat(True)
-        lessons.setAutoFillBackground(True)
-        lessons.setProperty("cssClass", "bigButton")
+        lessons = MenuButton('Μαθήματα', "lessons")
 
         def openLessons():
             """TBD."""
@@ -41,11 +38,7 @@ class FirstWindow(QMainWindow):
         lessons.clicked.connect(openLessons)
         layout.addWidget(lessons)
 
-        exercises = QPushButton('Ασκήσεις')
-        exercises.setObjectName("exercises")
-        exercises.setFlat(True)
-        exercises.setAutoFillBackground(True)
-        exercises.setProperty("cssClass", "bigButton")
+        exercises = MenuButton('Ασκήσεις', 'exercises')
 
         def openExercises() -> None:
             widget = ExercisesWidget()
@@ -54,11 +47,7 @@ class FirstWindow(QMainWindow):
         exercises.clicked.connect(openExercises)
 
         layout.addWidget(exercises)
-        statistics = QPushButton('Στατιστικά')
-        statistics.setObjectName("statistics")
-        statistics.setFlat(True)
-        statistics.setAutoFillBackground(True)
-        statistics.setProperty("cssClass", "bigButton")
+        statistics = MenuButton('Στατιστικά', "statistics")
 
         def openStatistics() -> None:
             alert = QMessageBox()
@@ -67,10 +56,7 @@ class FirstWindow(QMainWindow):
             exercises.clicked.connect(openStatistics)
         layout.addWidget(statistics)
 
-        exit_app = QPushButton('Έξοδος')
-        exit_app.setObjectName("exit")
-        exit_app.setFlat(True)
-        exit_app.setAutoFillBackground(True)
+        exit_app = MenuButton('Έξοδος', "exit")
         exit_app.setIcon(QtGui.QIcon("./resources/illustration-exit-door_53876-5844.jpg"))
         exit_app.setIconSize(QtCore.QSize(180, 180))
         exit_app.setProperty("cssClass", "bigButton")
@@ -105,17 +91,15 @@ class FirstWindow(QMainWindow):
         # margin-left: 90%;
     # background-image: url(./resources/math-seamless-pattern_111409-585.jpg);
 css = """
-*[cssClass="bigButton"] {
+MenuButton {
     font-size: 48pt;
     color: dimgray;
     border: 10px solid white;
     border-radius: 30px;
     font-weight: bold;
-    padding: 200%;
-    margin: 0px;
 }
 
-*[cssClass="bigButton"]:hover {
+MenuButton:hover {
         color: black;
         border: 10px solid black;
 }
