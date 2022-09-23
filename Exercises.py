@@ -63,7 +63,7 @@ class ExercisesWidget(QWidget):
         """
         parent = self.parentWidget()
 
-        print(parent.currentIndex())
+        # print(parent.currentIndex())
         old_widget = parent.currentWidget()
         parent.setCurrentIndex(parent.currentIndex() - 1)
         parent.removeWidget(old_widget)
