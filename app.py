@@ -13,6 +13,7 @@ from PyQt5 import QtCore
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 from MenuButton import MenuButton
+from Style import css
 
 
 class FirstWindow(QMainWindow):
@@ -87,40 +88,8 @@ class FirstWindow(QMainWindow):
         fileMenu.addAction(exitButton)
 
 
-        # margin-right: 90%;
-        # margin-left: 90%;
-    # background-image: url(./resources/math-seamless-pattern_111409-585.jpg);
-css = """
-MenuButton {
-    font-size: 48pt;
-    color: dimgray;
-    border: 10px solid white;
-    border-radius: 30px;
-    font-weight: bold;
-}
-
-MenuButton:hover {
-        color: black;
-        border: 10px solid black;
-}
-
-QPushButton#exercises {
-    background-image: url(./resources/Hourglass_512.png);
-}
-
-QPushButton#lessons {
-    background-image: url(./resources/math-seamless_256.jpg);
-}
-
-QPushButton#statistics {
-    background-image: url(./resources/calculator_yellow.png);
-}
-
-"""
-
-
 def main():
-    """Main."""
+    """Enter Main."""
     app = QApplication(argv)
     app.setStyleSheet(css)
     window = FirstWindow()
