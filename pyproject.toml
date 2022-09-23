@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "education-application"
+version = "0.1.0"
+description = "An education application"
+authors = ["cultab <rroarck@gmail.com>", "Asimakis Argyropoulos <makis31179@hotmail.com>"]
+license = "AGPLv3"
+readme = "README.md"
+packages = [{include = "education_application"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+PyQt5 = "5.15.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
