@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """Multiple choice questions."""
 
-from re import sub
 from typing import Protocol
 
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
@@ -23,8 +22,8 @@ class Question(Protocol):
     """
 
     prompt: str
-    correct: list[str]
-    answer: str
+    correct: str | list[str]
+    answer: str | list[str]
 
 
 class FillBlankQuestion():  # TODO: maybe do splitting here, also newline handling
@@ -233,16 +232,22 @@ class QuestionWidget(QWidget):
             answered.append(widget.getQuestion())
 
         stack = self.parentWidget()
+
         widget = OverviewWidget(answered)
         stack.addWidget(widget)
         stack.setCurrentWidget(widget)
+        # remove QuestionWidget
+        stack.removeWidget(self)
 
 
 class OverviewQuestionWidget(QWidget):
+    """Widget that shows the results of a set of questions."""
 
     def __init__(self, question: Question):
+        """Initialize an OverviewQuestionWidget."""
         super(OverviewQuestionWidget, self).__init__()
-        horizontal = QHBoxLayout()
+        horizontal = QVBoxLayout()
+
         self.setLayout(horizontal)
 
         correct_label = QLabel("Σωστό")
@@ -287,8 +292,6 @@ class OverviewQuestionWidget(QWidget):
                     horizontal.addWidget(wrong_label, 0)
                 else:
                     horizontal.addWidget(middle_label, 0)
-
-
             case MultipleChoiceQuestion():
                 flow = FlowLayout()
                 right.addLayout(flow)
@@ -324,6 +327,24 @@ class OverviewWidget(QListWidget):
             item.setSizeHint(widget.sizeHint())
             self.addItem(item)
             self.setItemWidget(item, widget)  # associate item with widget
+
+        back = QPushButton("Τέλος Άσκησης")
+        back.clicked.connect(self.Back)
+        item = QListWidgetItem(self)
+        item.setSizeHint(back.sizeHint())
+        self.addItem(item)
+        self.setItemWidget(item, back)
+
+    def Back(self) -> None:
+        """Go back to main page.
+
+        Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
+        """
+        parent = self.parentWidget()
+
+        old_widget = parent.currentWidget()
+        parent.setCurrentIndex(parent.currentIndex() - 1)
+        parent.removeWidget(old_widget)
 
 def test():
     """Testing."""

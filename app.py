@@ -10,7 +10,6 @@ from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMenu,
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 
-##test
 
 class FirstWindow(QMainWindow):
     """Main window."""
@@ -27,7 +26,7 @@ class FirstWindow(QMainWindow):
         button = QPushButton('Μαθήματα')
 
         def openLessons():
-            """TBD."""    
+            """TBD."""
             viewer = LessonsWidget()
             self.centralWidget().addWidget(viewer)
             self.centralWidget().setCurrentWidget(viewer)
@@ -76,7 +75,7 @@ class FirstWindow(QMainWindow):
         # MenuBar
         mainMenu = self.menuBar()
         fileMenu = mainMenu.addMenu("File")
-        exitButton = QAction('Exit',self)
+        exitButton = QAction('Exit', self)
         exitButton.triggered.connect(exit)
         fileMenu.addAction(exitButton)
 

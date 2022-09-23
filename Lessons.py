@@ -10,7 +10,7 @@ class LessonsWidget(QWidget):
 
         layout = QVBoxLayout()
         self.setLayout(layout)
-        
+
         viewer = QTextDocument()
 
 
@@ -36,16 +36,10 @@ class LessonsWidget(QWidget):
         layout.addWidget(back)
         back.clicked.connect(self.Back)
 
+    def Back(self) -> None:
+        """Go back to main page.
 
-    def Back(self):
-        """Go back to main page. Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
-        
-        Args:
-            self: Mandatory
-
-        Returns:
-            Nothing
-        
+        Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
         """
         parent = self.parentWidget()
 
@@ -53,6 +47,5 @@ class LessonsWidget(QWidget):
         old_widget = parent.currentWidget()
         parent.setCurrentIndex(parent.currentIndex() - 1)
         parent.removeWidget(old_widget)
-        
 
-        
+
