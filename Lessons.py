@@ -1,6 +1,12 @@
 from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
 from Chapters import ChaptersWidget
 
+from os import getcwd
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QTextDocument
+from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout
+
+
 class LessonsWidget(QWidget):
     """Widget that displays rich text documents in pages."""
 
@@ -14,6 +20,11 @@ class LessonsWidget(QWidget):
         lesson1 = QPushButton('Μάθημα 1')
         lesson2 = QPushButton('Μάθημα 2')
         lesson3 = QPushButton('Μάθημα 3')
+
+        horizontalbox = QHBoxLayout()
+
+        layout.addLayout(horizontalbox)
+        
         back = QPushButton('Πίσω')
 
         layout.addWidget(lesson1)
