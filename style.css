@@ -1,6 +1,3 @@
-"""CSS for application."""
-
-css = """
 MenuButton {
     font-size: 48pt;
     color: dimgray;
@@ -25,5 +22,3 @@ QPushButton#lessons {
 QPushButton#statistics {
     background-image: url(./resources/calculator_yellow.png);
 }
-
-"""
