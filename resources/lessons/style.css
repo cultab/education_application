@@ -25,6 +25,7 @@ h2.remember {
 }
 div.remember {
     background-color: powderblue;
+    padding: 0.5em;
 }
 
 div.think {
@@ -46,7 +47,7 @@ li.question::before {
 li.red::before{
     content: '\2022'; /* unicode dot */
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1em;
     position: absolute;
     color: red;
     left: 0;
@@ -54,7 +55,7 @@ li.red::before{
 li.green::before{
     content: '\2022'; /* unicode dot */
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1em;
     position: absolute;
     color: green;
     left: 0;
