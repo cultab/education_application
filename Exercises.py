@@ -13,19 +13,19 @@ class ExercisesWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        lesson1 = QPushButton('Ασκήσεις Μαθήματος 1')
-        lesson2 = QPushButton('Ασκήσεις Μαθήματος 2')
-        lesson3 = QPushButton('Ασκήσεις Μαθήματος 3')
+        exc1 = QPushButton('Ασκήσεις Μαθήματος 1')
+        exc2 = QPushButton('Ασκήσεις Μαθήματος 2')
+        exc3 = QPushButton('Ασκήσεις Μαθήματος 3')
         back = QPushButton('Πίσω')
 
-        layout.addWidget(lesson1)
-        layout.addWidget(lesson2)
-        layout.addWidget(lesson3)
+        layout.addWidget(exc1)
+        layout.addWidget(exc2)
+        layout.addWidget(exc3)
         layout.addWidget(back)
 
-        lesson1.clicked.connect(self.Exercises1)
-        lesson2.clicked.connect(self.Exercises2)
-        lesson3.clicked.connect(self.Exercises3)
+        exc1.clicked.connect(self.Exercises1)
+        exc2.clicked.connect(self.Exercises2)
+        exc3.clicked.connect(self.Exercises3)
         back.clicked.connect(self.Back)
 
     def Exercises1(self) -> None:

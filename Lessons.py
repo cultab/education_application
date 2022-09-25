@@ -1,7 +1,5 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QTextDocument
-from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout
-
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+from Chapters import ChaptersWidget
 
 class LessonsWidget(QWidget):
     """Widget that displays rich text documents in pages."""
@@ -13,56 +11,49 @@ class LessonsWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        self.htmlText = ["""<html>
-         <body>
-         <h2>HTML Image</h2>
-         <div>
-         <img src='pic_trulli.jpg' alt='Trulli' width='500' height='333'>
-         </div>
-         </body>
-         </html>"""]
-
-        self.htmlText.append ("""<html>
-         <body>
-         <h2>Hello</h2>
-         </body>
-         </html>""")
-        
-        self.viewer = QLabel(self.htmlText[0])
-        self.index = 0
-
-        self.viewer.setAlignment(Qt.AlignCenter)
-        layout.addWidget(self.viewer)
-
-        horizontalbox = QHBoxLayout()
-        previous = QPushButton('Προηγούμενο')
-        previous.clicked.connect(self.PreviousButton)
-
-        next = QPushButton('Επόμενο')
-        next.clicked.connect(self.NextButton)
-
-        horizontalbox.addWidget(previous)
-        horizontalbox.addWidget(next)
-        layout.addLayout(horizontalbox)
-        
+        lesson1 = QPushButton('Μάθημα 1')
+        lesson2 = QPushButton('Μάθημα 2')
+        lesson3 = QPushButton('Μάθημα 3')
         back = QPushButton('Πίσω')
+
+        layout.addWidget(lesson1)
+        layout.addWidget(lesson2)
+        layout.addWidget(lesson3)
         layout.addWidget(back)
+
+        lesson1.clicked.connect(self.Lesson1)
+        lesson2.clicked.connect(self.Lesson2)
+        lesson3.clicked.connect(self.Lesson3)
         back.clicked.connect(self.Back)
 
-    def PreviousButton(self) -> None:
+    def Lesson1(self) -> None:
+        self.LoadLessons(1)
+
+    def Lesson2(self) -> None:
+        self.LoadLessons(2)
+
+    def Lesson3(self) -> None:
+        self.LoadLessons(3)
+
+    def LoadLessons(self, lessonNumber) -> None:
         """"""
-        if self.index != 0:
-            self.viewer.setText(self.htmlText[self.index-1])
-            self.index -= 1
+        match lessonNumber:
+            case 1:
+                #Load Chapter 1 in self.htmlText
+                chapter = ChaptersWidget(1)
+            case 2:
+                #Load Chapter 2 in self.htmlText
+                """"""
+                chapter = ChaptersWidget(2)
+            case 3:
+                #Load Chapter 3 in self.htmlText
+                """"""
+                chapter = ChaptersWidget(3)
 
+        stack = self.parentWidget()
+        stack.addWidget(chapter)
+        stack.setCurrentWidget(chapter)
 
-
-    def NextButton(self) -> None:
-        """"""
-        if self.index != (len(self.htmlText) -1):                
-            self.viewer.setText(self.htmlText[self.index+1])
-            self.index += 1
-        
     def Back(self) -> None:
         """Go back to main page.
 
