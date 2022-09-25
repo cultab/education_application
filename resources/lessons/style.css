@@ -11,12 +11,27 @@ h1 {
     background-color: rosybrown;
     padding: 1em;
 }
-h2 {
+h2.activity {
     background-color: darkseagreen;
     padding: 1em;
+    width: max-content;
+}
+h2.remember {
+    font-style: oblique;
+    background-color: crimson;
+    padding: 0.5em;
+    color: gold;
+    width: max-content;
+}
+div.remember {
+    background-color: powderblue;
 }
 
-ul.question {
+div.think {
+    background-color: thistle;
+}
+
+ul {
     position: relative;
     list-style: none;
 }
@@ -28,15 +43,18 @@ li.question::before {
     left: 0;
 }
 
-ul.answer {
-    position: relative;
-    list-style: none;
-}
-
-li.answer::before{
-    content: '⠿';
+li.red::before{
+    content: '\2022'; /* unicode dot */
+    font-weight: bold;
     position: absolute;
-    color: orangered;
+    color: red;
+    left: 0;
+}
+li.green::before{
+    content: '\2022'; /* unicode dot */
+    font-weight: bold;
+    position: absolute;
+    color: green;
     left: 0;
 }
 
