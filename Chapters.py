@@ -47,11 +47,13 @@ class ChaptersWidget(QWidget):
 
     def LoadChapter(self, chapNumber) -> None:
         """Load chapter by chapNumber."""
-        directory = os.getcwd() + "/resources/lessons/"
-        for file in os.listdir(directory):
+        path = os.getcwd() + "/resources/lessons/"
+        dir = os.listdir(path)
+        dir.sort()
+        for file in dir:
             regex = "lesson" + str(chapNumber) + r".*"
             if re.match(regex, file):
-                self.files.append(QUrl.fromLocalFile(directory + file))
+                self.files.append(QUrl.fromLocalFile(path + file))
                 print(f"Loaded {file=}")
 
         self.viewer.setUrl(self.files[0])
