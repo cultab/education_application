@@ -13,16 +13,6 @@ class LessonsWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        self.viewer = QLabel("""<html>
-         <body>
-         <h2>HTML Image</h2>
-         <div>
-         <img src='pic_trulli.jpg' alt='Trulli' width='500' height='333'>
-         </div>
-         </body>
-         </html>""")
-
-        self.viewer.setAlignment(Qt.AlignCenter)
         self.htmlText = ["""<html>
          <body>
          <h2>HTML Image</h2>
@@ -37,8 +27,11 @@ class LessonsWidget(QWidget):
          <h2>Hello</h2>
          </body>
          </html>""")
+        
+        self.viewer = QLabel(self.htmlText[0])
+        self.index = 0
 
-
+        self.viewer.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.viewer)
 
         horizontalbox = QHBoxLayout()
@@ -58,19 +51,18 @@ class LessonsWidget(QWidget):
 
     def PreviousButton(self) -> None:
         """"""
-        for i,text in enumerate(self.htmlText):
-            if self.viewer.text() == text and i != 0:
-                self.viewer.setText(self.htmlText[i-1])
-                break
+        if self.index != 0:
+            self.viewer.setText(self.htmlText[self.index-1])
+            self.index -= 1
+
 
 
     def NextButton(self) -> None:
         """"""
-        for i,text in enumerate(self.htmlText):
-            if self.viewer.text() == text and i != (len(self.htmlText) -1):                
-                self.viewer.setText(self.htmlText[i+1])
-                break
-
+        if self.index != (len(self.htmlText) -1):                
+            self.viewer.setText(self.htmlText[self.index+1])
+            self.index += 1
+        
     def Back(self) -> None:
         """Go back to main page.
 
