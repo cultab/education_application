@@ -17,8 +17,8 @@ class Question(Protocol):
 
     Questions are required to have 2 attributes:
 
-    * A prompt string
-    * An answer string
+    * A prompt
+    * An answer
     """
 
     prompt: str
@@ -163,6 +163,9 @@ class QuestionWidget(QWidget):
         self.correctAnswers = 0
         self.stack = QStackedWidget()
 
+        if not len(questions) > 1:
+            raise RuntimeError("QuestionWidget requires to be initilized with >1 questions.")
+
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -250,6 +253,7 @@ class OverviewQuestionWidget(QWidget):
 
         self.setLayout(horizontal)
 
+        # prepare labels
         correct_label = QLabel("Σωστό")
         correct_label.setStyleSheet("color: seagreen; font-weight: bold")
         wrong_label = QLabel("Λάθος")
@@ -257,13 +261,15 @@ class OverviewQuestionWidget(QWidget):
         middle_label = QLabel("Σχεδόν")
         middle_label.setStyleSheet("color: goldenrod; font-weight: bold")
 
+        # right side of widget
         right = QVBoxLayout()
 
+        # add question prompt
         prompt = QLabel(question.prompt)
         prompt.setStyleSheet("color: dodgerblue; font-weight: bold")
-
         right.addWidget(prompt)
 
+        # add question details based on question's type
         match question:
             case FillBlankQuestion():
                 flow = FlowLayout()
@@ -292,12 +298,14 @@ class OverviewQuestionWidget(QWidget):
                     horizontal.addWidget(wrong_label, 0)
                 else:
                     horizontal.addWidget(middle_label, 0)
+
             case MultipleChoiceQuestion():
                 flow = FlowLayout()
                 right.addLayout(flow)
 
                 correct = QLabel(question.choices[question.correct])
                 correct.setStyleSheet("color: seagreen; font-weight: bold")
+
                 if question.answer == question.choices[question.correct]:
                     horizontal.addWidget(correct_label, 0)
                     flow.addWidget(correct)
@@ -306,6 +314,7 @@ class OverviewQuestionWidget(QWidget):
                     false = QLabel(question.answer)
                     false.setStyleSheet("color: crimson; font-weight: bold")
 
+                    # add correct answer and given answer
                     flow.addWidget(correct)
                     flow.addWidget(QLabel(" | "))
                     flow.addWidget(false)
@@ -316,9 +325,11 @@ class OverviewQuestionWidget(QWidget):
         horizontal.addLayout(right, 100)
 
 
-
 class OverviewWidget(QListWidget):
+    """Widget that contains a list of OverviewQuestionWidgets."""
+
     def __init__(self, questions: list[Question]):
+        """Initialize OverviewWidget with a list of Questions."""
         super(OverviewWidget, self).__init__()
 
         for question in questions:
@@ -338,13 +349,15 @@ class OverviewWidget(QListWidget):
     def Back(self) -> None:
         """Go back to main page.
 
-        Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
+        Use the parent widget (QStacked) to set the previous widget
+        as the current, then delete this one.
         """
         parent = self.parentWidget()
 
         old_widget = parent.currentWidget()
         parent.setCurrentIndex(parent.currentIndex() - 1)
         parent.removeWidget(old_widget)
+
 
 def test():
     """Testing."""

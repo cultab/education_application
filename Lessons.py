@@ -4,8 +4,10 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayo
 
 
 class LessonsWidget(QWidget):
+    """Widget that displays rich text documents in pages."""
 
     def __init__(self):
+        """Initialize LessonsWidget."""
         super().__init__()
 
         layout = QVBoxLayout()
@@ -13,14 +15,13 @@ class LessonsWidget(QWidget):
 
         viewer = QTextDocument()
 
-
         viewer = QLabel("""<html>
-         <body> 
-         <h2>HTML Image</h2> 
+         <body>
+         <h2>HTML Image</h2>
          <div>
-         <img src='pic_trulli.jpg' alt='Trulli' width='500' height='333'> 
+         <img src='pic_trulli.jpg' alt='Trulli' width='500' height='333'>
          </div>
-         </body> 
+         </body>
          </html>""")
         viewer.setAlignment(Qt.AlignCenter)
 

@@ -8,9 +8,6 @@ from PyQt5.QtWidgets import (QLayout, QLayoutItem, QSizePolicy, QSpacerItem,
 class FlowLayout(QLayout):
     """Layout that let's widgets rearrange themselves to fill the available space."""
 
-    class Spacer(int):
-        pass
-
     def __init__(self, margin=-1, hSpacing=-1, vSpacing=-1):
         """Initialize FlowLayout."""
         super().__init__()
@@ -139,4 +136,3 @@ class FlowLayout(QLayout):
     def newRow(self):
         """Add a horizontal spacer forcing following widgets to a new row."""
         self.itemList.append(QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Minimum))
-

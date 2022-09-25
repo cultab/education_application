@@ -1,15 +1,13 @@
-from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
-                             QMainWindow, QPushButton, QRadioButton,
-                             QStackedWidget, QVBoxLayout, QWidget)
-
+"""Exercises window."""
+from PyQt5.QtWidgets import (QVBoxLayout, QPushButton, QWidget)
 from Question import FillBlankQuestion, MultipleChoiceQuestion, QuestionWidget
 
 
 class ExercisesWidget(QWidget):
-    """Window layout for choosing a set of exercises."""
+    """Widget for choosing a set of exercises."""
 
     def __init__(self):
-        """Initialize ExercisesLayout."""
+        """Initialize ExercisesWidget."""
         super().__init__()
 
         layout = QVBoxLayout()
@@ -30,7 +28,7 @@ class ExercisesWidget(QWidget):
         lesson3.clicked.connect(self.Exercises3)
         back.clicked.connect(self.Back)
 
-    def Exercises1(self):
+    def Exercises1(self) -> None:
         """First set of exercises."""
         question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
         question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
@@ -51,15 +49,10 @@ class ExercisesWidget(QWidget):
         """TBD"""
         pass
 
-    def Back(self):
-        """Go back to main page. Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
-        
-        Args:
-            self: Mandatory
+    def Back(self) -> None:
+        """Go back to main page.
 
-        Returns:
-            Nothing
-        
+        Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
         """
         parent = self.parentWidget()
 

@@ -89,9 +89,9 @@ class FirstWindow(QMainWindow):
 
 
 def main():
-    """Enter Main."""
+    """."""
     app = QApplication(argv)
-    app.setStyleSheet(css)
+    app.setStyleSheet(open("style.css").read())
     window = FirstWindow()
     window.show()
     app.exec()
