@@ -60,6 +60,14 @@ li.green::before{
     left: 0;
 }
 
+li.blue::before{
+    content: '▶';
+    position: absolute;
+    color: blue;
+    left: 0;
+}
+
+
 /* fraction */
 .frac {
     display: inline-block;
