@@ -13,7 +13,6 @@ from PyQt5 import QtCore
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 from MenuButton import MenuButton
-from Style import css
 
 
 class FirstWindow(QMainWindow):
