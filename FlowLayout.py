@@ -8,12 +8,10 @@ from PyQt5.QtWidgets import (QLayout, QLayoutItem, QSizePolicy, QSpacerItem,
 class FlowLayout(QLayout):
     """Layout that let's widgets rearrange themselves to fill the available space."""
 
-    def __init__(self, margin=-1, hSpacing=-1, vSpacing=-1):
+    def __init__(self, margin=-1, hSpacing=-1, vSpacing=-1, *args, **kwargs):
         """Initialize FlowLayout."""
-        super().__init__()
+        super(FlowLayout, self).__init__(*args, **kwargs)
 
-        self.remainH = 0
-        self.lastV = 0
         self.itemList = []
         self.m_hSpace = hSpacing
         self.m_vSpace = vSpacing
@@ -88,7 +86,6 @@ class FlowLayout(QLayout):
 
     def doLayout(self, rect: QRect, testOnly: bool) -> int:
         """Lay items out."""
-        self.lastRect = rect
         left, top, right, bottom = self.getContentsMargins()
         effectiveRect = rect.adjusted(left, top, -right, -bottom)
         x = effectiveRect.x()
@@ -106,8 +103,9 @@ class FlowLayout(QLayout):
 
             match item:
                 case QSpacerItem():
-                    x = effectiveRect.x() + spaceX
-                    y = y + lineHeight + spaceY
+                    item.setGeometry(QRect(x, y, effectiveRect.x() - x, effectiveRect.y() - y))
+                    x = effectiveRect.x()
+                    y = y + lineHeight
                     lineHeight = 0
                     continue
 
@@ -115,17 +113,15 @@ class FlowLayout(QLayout):
             if nextX - spaceX > effectiveRect.right() and lineHeight > 0:
                 x = effectiveRect.x()
                 y = y + lineHeight + spaceY
+                nextX = x + item.sizeHint().width() + spaceX
                 lineHeight = 0
-            else:
 
+            if not testOnly:
                 rect = QRect(QPoint(x, y), item.sizeHint())
                 item.setGeometry(rect)
 
             x = nextX
             lineHeight = max(lineHeight, item.sizeHint().height())
-
-        self.remainH = effectiveRect.right() - nextX
-        self.lastV = lineHeight
 
         return y + lineHeight - rect.y() + bottom
 
