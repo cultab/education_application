@@ -4,12 +4,13 @@
 from typing import Protocol
 
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout,
                              QLineEdit, QListWidget, QListWidgetItem,
                              QPushButton, QRadioButton, QStackedWidget,
                              QVBoxLayout, QWidget)
 
 from FlowLayout import FlowLayout
+from WrapLabel import WrapLabel
 
 
 class Question(Protocol):
@@ -70,7 +71,8 @@ class FillBlankQuestionWidget(QWidget):
         layout = FlowLayout(0, 0, 0)
         self.setLayout(layout)
 
-        layout.addWidget(QLabel(self.question.prompt))
+        layout.addWidget(WrapLabel(self.question.prompt))
+        layout.newRow()
 
         letters = [*self.question.text]
 
@@ -80,7 +82,7 @@ class FillBlankQuestionWidget(QWidget):
             match c:
                 case "&" | "\n":
                     if text:
-                        layout.addWidget(QLabel(text))
+                        layout.addWidget(WrapLabel(text))
                         text = ""
                     match c:
                         case "&":
@@ -93,7 +95,7 @@ class FillBlankQuestionWidget(QWidget):
                     text = text + c
         else:
             if text:
-                layout.addWidget(QLabel(text))
+                layout.addWidget(WrapLabel(text))
 
     def getQuestion(self) -> FillBlankQuestion:
         """Get answered question."""
@@ -144,7 +146,7 @@ class MultipleChoiceQuestionWidget(QWidget):
 
         self.setLayout(box)
 
-        box.addWidget(QLabel(self.question.prompt))
+        box.addWidget(WrapLabel(self.question.prompt))
 
         grid = QGridLayout()
         box.addLayout(grid)
@@ -273,19 +275,19 @@ class OverviewQuestionWidget(QWidget):
         self.setLayout(horizontal)
 
         # prepare labels
-        correct_label = QLabel("Σωστό")
+        correct_label = WrapLabel("Σωστό")
         correct_label.setStyleSheet("color: seagreen; font-weight: bold")
-        wrong_label = QLabel("Λάθος")
+        wrong_label = WrapLabel("Λάθος")
         wrong_label.setStyleSheet("color: crimson; font-weight: bold")
-        middle_label = QLabel("Σχεδόν")
+        middle_label = WrapLabel("Σχεδόν")
         middle_label.setStyleSheet("color: goldenrod; font-weight: bold")
 
         # right side of widget
         right = QVBoxLayout()
 
         # add question prompt
-        prompt = QLabel(question.prompt)
-        prompt.setStyleSheet("color: dodgerblue; font-weight: bold")
+        prompt = WrapLabel(question.prompt)
+        prompt.setStyleSheet("color: indigo; font-weight: bold")
         right.addWidget(prompt)
 
         # add question details based on question's type
@@ -302,32 +304,34 @@ class OverviewQuestionWidget(QWidget):
                 all_false = True
                 for c in letters:
                     match c:
-                        case "&":
-                            answer = question.answer[i]
-                            correct = question.correct[i]
-                            ans = QLabel(answer)
-                            cor = QLabel(correct)
-                            cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
-                            if text:
-                                flow.addWidget(QLabel(text))
-                                text = ""
-                                if answer == correct:
-                                    all_false = False
-                                    ans.setStyleSheet("color: seagreen; font-weight: bold")
-                                else:
-                                    all_correct = False
-                                    ans.setStyleSheet("color: crimson; font-weight: bold")
-                                    flow.addWidget(cor)
+                        case "&" | "\n":
+                            match c:
+                                case "&":
+                                    answer = question.answer[i]
+                                    correct = question.correct[i]
+                                    ans = WrapLabel(answer)
+                                    cor = WrapLabel(correct)
+                                    cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
+                                    if text:
+                                        flow.addWidget(WrapLabel(text))
+                                        text = ""
+                                        if answer == correct:
+                                            all_false = False
+                                            ans.setStyleSheet("color: seagreen; font-weight: bold")
+                                        else:
+                                            all_correct = False
+                                            ans.setStyleSheet("color: crimson; font-weight: bold")
+                                            flow.addWidget(cor)
 
-                                flow.addWidget(ans)
-                                i += 1
-                        case "\n":
-                            pass
+                                        flow.addWidget(ans)
+                                        i += 1
+                                case "\n":
+                                    flow.newRow()
                         case _:
                             text = text + c
                 else:
                     if text:
-                        flow.addWidget(QLabel(text))
+                        flow.addWidget(WrapLabel(text))
 
                 if all_correct:
                     horizontal.addWidget(correct_label, 0)
@@ -340,7 +344,7 @@ class OverviewQuestionWidget(QWidget):
                 flow = FlowLayout()
                 right.addLayout(flow)
 
-                correct = QLabel(question.choices[question.correct])
+                correct = WrapLabel(question.choices[question.correct])
                 correct.setStyleSheet("color: seagreen; font-weight: bold")
 
                 if question.answer == question.choices[question.correct]:
@@ -348,16 +352,16 @@ class OverviewQuestionWidget(QWidget):
                     flow.addWidget(correct)
                 else:
                     horizontal.addWidget(wrong_label, 0)
-                    false = QLabel(question.answer)
+                    false = WrapLabel(question.answer)
                     false.setStyleSheet("color: crimson; font-weight: bold")
 
                     # add correct answer and given answer
                     flow.addWidget(correct)
-                    flow.addWidget(QLabel(" | "))
+                    flow.addWidget(WrapLabel(" | "))
                     flow.addWidget(false)
             case _:
-                right.addWidget(QLabel("Prompt here and stuff also more text and things."))
-                right.addWidget(QLabel("More text here and stuff also EVEN more text and things."))
+                right.addWidget(WrapLabel("Prompt here and stuff also more text and things."))
+                right.addWidget(WrapLabel("More text here and stuff also EVEN more text and things."))
 
         horizontal.addLayout(right, 100)
 
