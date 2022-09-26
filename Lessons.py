@@ -21,34 +21,14 @@ class LessonsWidget(QWidget):
         layout.addWidget(lesson3)
         layout.addWidget(back)
 
-        lesson1.clicked.connect(self.Lesson1)
-        lesson2.clicked.connect(self.Lesson2)
-        lesson3.clicked.connect(self.Lesson3)
+        lesson1.clicked.connect(lambda _: self.LoadLessons(1))
+        lesson2.clicked.connect(lambda _: self.LoadLessons(2))
+        lesson3.clicked.connect(lambda _: self.LoadLessons(3))
         back.clicked.connect(self.Back)
 
-    def Lesson1(self) -> None:
-        self.LoadLessons(1)
-
-    def Lesson2(self) -> None:
-        self.LoadLessons(2)
-
-    def Lesson3(self) -> None:
-        self.LoadLessons(3)
-
     def LoadLessons(self, lessonNumber) -> None:
-        """"""
-        match lessonNumber:
-            case 1:
-                #Load Chapter 1 in self.htmlText
-                chapter = ChaptersWidget(1)
-            case 2:
-                #Load Chapter 2 in self.htmlText
-                """"""
-                chapter = ChaptersWidget(2)
-            case 3:
-                #Load Chapter 3 in self.htmlText
-                """"""
-                chapter = ChaptersWidget(3)
+        """Load Lessons with lessonNumber."""
+        chapter = ChaptersWidget(lessonNumber)
 
         stack = self.parentWidget()
         stack.addWidget(chapter)
