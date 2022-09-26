@@ -54,7 +54,7 @@ class ChaptersWidget(QWidget):
             regex = "lesson" + str(chapNumber) + r".*"
             if re.match(regex, file):
                 self.files.append(QUrl.fromLocalFile(path + file))
-                print(f"Loaded {file=}")
+                # print(f"Loaded {file=}")
 
         self.viewer.setUrl(self.files[0])
 
@@ -72,7 +72,7 @@ class ChaptersWidget(QWidget):
 
     def NextButton(self) -> None:
         """."""
-        print(f"{self.index=} {len(self.files)=}")
+        # print(f"{self.index=} {len(self.files)=}")
         if self.index < len(self.files) - 1:
             self.index += 1
             self.viewer.setUrl(self.files[self.index])
