@@ -30,14 +30,33 @@ class ExercisesWidget(QWidget):
 
     def Exercises1(self) -> None:
         """First set of exercises."""
-        question1 = MultipleChoiceQuestion("The number is 1. What's the number?", ["2", "23", "69", "1", "23", "26"], 3)
-        question2 = MultipleChoiceQuestion("The number is 2. What's the number?", ["1", "2", "69", "2", "twenyone", "26"], 2)
-        question3 = MultipleChoiceQuestion("The number is 3. What's the number?", ["3", "twenyone", "26"], 0)
-        question4 = MultipleChoiceQuestion("The number is 4. What's the number?", ["1", "6", "4", "2", "twenyone", "26"], 2)
-        question5 = FillBlankQuestion("Fill in the blanks:", "1 + 1 =&" + "2 + 2 =&" + "4 + 4 =&", [2, 4, 8])
+        questions = [
+            FillBlankQuestion("Μία δεξαμενή πετρελαίου σε μια πολυκατοικία χωράει 2000lt, Ο διαχειριστής σε μια μέτρηση βρήκε ότι ήταν γεμάτη κατά τα 3/4. Πόσα λίτρα πετρέλαιο είχε η δεξαμενή;", " &lt", ["1500"]),
+            FillBlankQuestion("Τα 3/5 ενός μπαχαρικού κοστίζουν 27Ευρώ. Πόσο κοστίζουν τα 8/9 του κιλού;", " &Ευρώ", ["45"]),
+            FillBlankQuestion("Συμπλήρωσε τα παρακάτω κενά:", """
+(α)	Στο κλάσμα Εικόνα οι αριθμοί κ και λ ονομάζονται & και &
+(β) Ισχύει ότι: (α) α/1 = & (β) α/α  = & (γ) 0/α = &
+(γ) Η φράση 'το μέρος κ/λ ενός μεγέθους Α' εκφράζει τον χωρισμό του μεγέθους Α σε & μεγέθη.
+""", ["αριθμητής", "παρονομαστής", "α", "1", "0", "λ"]),
+            MultipleChoiceQuestion("Τα κλάσματα 3/4, 2/3, 7/9, 10/9, 18/20, είναι όλα μικρότερα της μονάδας.", ["Σωστό", "Λάθος"], 1),
+            MultipleChoiceQuestion("Αν το 1/5 ενός κιλού καρύδια είναι 14 καρύδια, το κιλό περιέχει 70 καρύδια;", ["Σωστό", "Λάθος"], 0),
+            FillBlankQuestion("Από μία τούρτα περίσσεψαν 4 κομμάτια τα οποία αποτελούν τα 2/7 της τούρτας. Πόσα ήταν αρχικά όλα τα κομμάτια της τούρτας;", " &κομμάτια", ["14"]),
+            FillBlankQuestion("Βρες ποιο μέρος του κιλού είναι τα:", """
+(α) 100 γραμμάρια &
+(β) 250 γραμμάρια &
+(γ) 500 γραμμάρια &
+(δ) 600 γραμμάρια &
+""", ["1/10", "1/4", "1/2", "3/5"]),
+            FillBlankQuestion("Ποιό μέρος:", """
+(α) του μήνα &
+(β) του εξαμήνου &
+(γ) του έτους &
+είναι οι 15 μέρες; (Έστω ότι ο μήνας έχει 15 ημέρες και ο χρόνος 365)
+""", ["1/2", "1/12", "3/73"])
+        ]
 
         stack = self.parentWidget()
-        question = QuestionWidget([question5, question2, question3, question4, question1])
+        question = QuestionWidget(questions)
         stack.addWidget(question)
         stack.setCurrentWidget(question)
 

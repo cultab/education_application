@@ -12,6 +12,8 @@ class FlowLayout(QLayout):
         """Initialize FlowLayout."""
         super().__init__()
 
+        self.remainH = 0
+        self.lastV = 0
         self.itemList = []
         self.m_hSpace = hSpacing
         self.m_vSpace = vSpacing
@@ -86,6 +88,7 @@ class FlowLayout(QLayout):
 
     def doLayout(self, rect: QRect, testOnly: bool) -> int:
         """Lay items out."""
+        self.lastRect = rect
         left, top, right, bottom = self.getContentsMargins()
         effectiveRect = rect.adjusted(left, top, -right, -bottom)
         x = effectiveRect.x()
@@ -103,8 +106,8 @@ class FlowLayout(QLayout):
 
             match item:
                 case QSpacerItem():
-                    x = effectiveRect.x()
-                    y = y + lineHeight
+                    x = effectiveRect.x() + spaceX
+                    y = y + lineHeight + spaceY
                     lineHeight = 0
                     continue
 
@@ -120,6 +123,9 @@ class FlowLayout(QLayout):
 
             x = nextX
             lineHeight = max(lineHeight, item.sizeHint().height())
+
+        self.remainH = effectiveRect.right() - nextX
+        self.lastV = lineHeight
 
         return y + lineHeight - rect.y() + bottom
 

@@ -3,6 +3,7 @@
 
 from typing import Protocol
 
+from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
                              QLineEdit, QListWidget, QListWidgetItem,
                              QPushButton, QRadioButton, QStackedWidget,
@@ -71,14 +72,28 @@ class FillBlankQuestionWidget(QWidget):
 
         layout.addWidget(QLabel(self.question.prompt))
 
-        texts = self.question.text.split(sep="&")
+        letters = [*self.question.text]
 
-        for text in texts[:-1]:
-            t = QLabel(text)
-            e = QLineEdit()
-            self.answer.append(e)
-            layout.addWidget(t)
-            layout.addWidget(e)
+        text = ""
+        widget: QWidget = None
+        for c in letters:
+            match c:
+                case "&" | "\n":
+                    if text:
+                        layout.addWidget(QLabel(text))
+                        text = ""
+                    match c:
+                        case "&":
+                            widget = QLineEdit()
+                            layout.addWidget(widget)
+                            self.answer.append(widget)
+                        case "\n":
+                            layout.newRow()
+                case _:
+                    text = text + c
+        else:
+            if text:
+                layout.addWidget(QLabel(text))
 
     def getQuestion(self) -> FillBlankQuestion:
         """Get answered question."""
@@ -98,7 +113,11 @@ class MultipleChoiceQuestion():
     answer: str
 
     def __init__(self, prompt: str, choices: list[str], correctChoice: str):
-        """Initialize a MultipleChoiceQuestion."""
+        """
+        Initialize a MultipleChoiceQuestion.
+
+        correctChoice indexes the list choices
+        """
         self.prompt = prompt
         self.choices = choices
         self.correct = correctChoice
@@ -275,22 +294,40 @@ class OverviewQuestionWidget(QWidget):
                 flow = FlowLayout()
                 right.addLayout(flow)
 
-                texts = question.text.split(sep="&")
+                letters = [*question.text]
+
+                text = ""
+                i = 0
                 all_correct = True
                 all_false = True
-                for text, answer, correct in zip(texts[:-1], question.answer, question.correct):
-                    text = QLabel(text)
-                    ans = QLabel(answer)
+                for c in letters:
+                    match c:
+                        case "&":
+                            answer = question.answer[i]
+                            correct = question.correct[i]
+                            ans = QLabel(answer)
+                            cor = QLabel(correct)
+                            cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
+                            if text:
+                                flow.addWidget(QLabel(text))
+                                text = ""
+                                if answer == correct:
+                                    all_false = False
+                                    ans.setStyleSheet("color: seagreen; font-weight: bold")
+                                else:
+                                    all_correct = False
+                                    ans.setStyleSheet("color: crimson; font-weight: bold")
+                                    flow.addWidget(cor)
 
-                    if answer == correct:
-                        all_false = False
-                        ans.setStyleSheet("color: seagreen; font-weight: bold")
-                    else:
-                        all_correct = False
-                        ans.setStyleSheet("color: crimson; font-weight: bold")
-
-                    flow.addWidget(text)
-                    flow.addWidget(ans)
+                                flow.addWidget(ans)
+                                i += 1
+                        case "\n":
+                            pass
+                        case _:
+                            text = text + c
+                else:
+                    if text:
+                        flow.addWidget(QLabel(text))
 
                 if all_correct:
                     horizontal.addWidget(correct_label, 0)
@@ -332,8 +369,15 @@ class OverviewWidget(QListWidget):
         """Initialize OverviewWidget with a list of Questions."""
         super(OverviewWidget, self).__init__()
 
+        # layout = QVBoxLayout()
+        # self.setLayout(layout)
+        # self.setUniformItemSizes(False)
+        # self.setResizeMode(QListWidget.Adjust)
+        # self.setSelectionRectVisible(True)
+
         for question in questions:
             widget = OverviewQuestionWidget(question)  # question widget
+            # layout.addWidget(widget)
             item = QListWidgetItem(self)
             item.setSizeHint(widget.sizeHint())
             self.addItem(item)
@@ -345,6 +389,7 @@ class OverviewWidget(QListWidget):
         item.setSizeHint(back.sizeHint())
         self.addItem(item)
         self.setItemWidget(item, back)
+        # layout.addWidget(back)
 
     def Back(self) -> None:
         """Go back to main page.

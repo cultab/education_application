@@ -3,8 +3,8 @@
 
 from sys import argv
 
-from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMenu,
-                             QMenuBar, QMessageBox, QPushButton,
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow,
+                             QMessageBox,
                              QStackedWidget, QVBoxLayout, QWidget)
 
 from PyQt5 import QtGui
