@@ -27,6 +27,15 @@ div.remember {
     background-color: #E7F5FE;
     padding: 0.5em;
 }
+/* .remember .frac {
+    color: #22A7C4;
+}
+.remember .frac span.bottom {
+    border-top: thin solid #22A7C4;
+}
+.remember strong {
+    color: #22A7C4;
+} */
 
 div.think {
     background-color: thistle;
@@ -37,35 +46,36 @@ ul {
     list-style: none;
 }
 
+li::before {
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
 li.question::before {
     content: '▶';
-    position: absolute;
     color: darkseagreen;
-    left: 0;
 }
 
 li.red::before{
-    content: '\2022'; /* unicode dot */
-    font-weight: bold;
-    font-size: 1em;
-    position: absolute;
+    content: '●'; /* unicode dot */
     color: red;
-    left: 0;
 }
 li.green::before{
-    content: '\2022'; /* unicode dot */
-    font-weight: bold;
-    font-size: 1em;
-    position: absolute;
+    content: '◆'; /* unicode dot */
     color: green;
-    left: 0;
 }
 
 li.blue::before{
     content: '▶';
-    position: absolute;
     color: blue;
-    left: 0;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
