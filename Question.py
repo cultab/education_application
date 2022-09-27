@@ -51,6 +51,9 @@ class FillBlankQuestion():  # TODO: maybe do splitting here, also newline handli
         self.correct = [str(x) for x in correct]  # convert to string
         self.answer = list()
 
+        if not len(self.correct) == self.text.count("&"):
+            raise ValueError(f"Must give the same count of '&' characters and correct answers. Gave {len(self.correct)} correct answers and {self.text.count('&')} '&' characters.\n{self}")
+
     def __repr__(self):
         """Return string representation."""
         return f"{self.prompt=} {self.text=} {self.correct=} {self.answer=}"
@@ -185,7 +188,7 @@ class QuestionWidget(QWidget):
         self.stack = QStackedWidget()
 
         if not len(questions) > 1:
-            raise RuntimeError("QuestionWidget requires to be initilized with >1 questions.")
+            raise ValueError("QuestionWidget requires to be initilized with >1 questions.")
 
         layout = QVBoxLayout()
         self.setLayout(layout)
