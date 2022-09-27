@@ -17,16 +17,19 @@ class ExercisesWidget(QWidget):
         exc1 = QPushButton('Ασκήσεις Μαθήματος 1')
         exc2 = QPushButton('Ασκήσεις Μαθήματος 2')
         exc3 = QPushButton('Ασκήσεις Μαθήματος 3')
+        exc4 = QPushButton("Τελικό Διαγώνισμα")
         back = QPushButton('Πίσω')
 
         layout.addWidget(exc1)
         layout.addWidget(exc2)
         layout.addWidget(exc3)
+        layout.addWidget(exc4)
         layout.addWidget(back)
 
         exc1.clicked.connect(self.Exercises1)
         exc2.clicked.connect(self.Exercises2)
         exc3.clicked.connect(self.Exercises3)
+        exc4.clicked.connect(self.Exercises4)
         back.clicked.connect(self.Back)
 
     def Exercises2(self) -> None:
@@ -189,7 +192,55 @@ class ExercisesWidget(QWidget):
         question = QuestionWidget(questions)
         stack.addWidget(question)
         stack.setCurrentWidget(question)
-        pass
+
+    def Exercises4(self) -> None:
+        """Excercises for the final exam"""
+        questions = [
+            FillBlankQuestion("Στρογγυλοποίησε τον αριθμό 7.568.349 στις πλησιέστερες:", """
+            (α) δεκάδες &
+            (β) εκατοντάδες &
+            (γ) χιλιάδες &
+            (δ) δεκάδες χιλιάδες &
+            (ε) εκατοντάδες χιλιάδες &""", ["7568350", "7568300", "7568000", "7570000", "7600000"]),
+            FillBlankQuestion("Γράψε καθένα από τα παρακάτω κλάσματα, ως δεκαδικό αριθμό: (i) με προσέγγιση εκατοστού και (ii) με προσέγγιση χιλιοστού:", """
+(α) 7/16: (i) & (ii) &
+(β) 21/17: (i) & (ii) &
+(γ) 20/95: (i) & (ii) &
+""", ["0,437", "0,4375", "1,588", "1,5882", "0,210", "0,2105"]),
+            FillBlankQuestion("Ποιό μέρος:", """
+            (α) του μήνα &
+            (β) του εξαμήνου &
+            (γ) του έτους &
+            είναι οι 15 μέρες; (Έστω ότι ο μήνας έχει 15 ημέρες και ο χρόνος 365)
+            """, ["1/2", "1/12", "3/73"]),
+            FillBlankQuestion("Να βρεις το ψηφίο των χιλιοστών και των δεκάκις χιλιοστών στους παρακάτω αριθμούς:", """
+            (α) 5,8909 &
+            (β) 90,0005: &
+            (γ) 7,534: &
+            """, ["9", "5", "6"]),
+            FillBlankQuestion("Στρογγυλοποίησε στην πλησιέστερη εκατοντάδα τους αριθμούς: ", """
+            (α) 345 &
+            (β) 761 &
+            (γ) 659 &
+            (δ) 2.567 &
+            (ε) 9.532 &
+            (στ) 123.564 &
+            (ζ) 34.564 &
+            (η) 31.549 &
+            (θ) 8.765 &""", ["300", "800", "700", "2600", "9500", "123600", "34600", "31600", "8800"]),
+            MultipleChoiceQuestion("""Επέλεξε Σωστό ή Λάθος:
+            Δεν υπάρχει φυσικός αριθμός μεταξύ των αριθμών 2 και 3""", ["Σωστό", "Λάθος"], 0),
+            MultipleChoiceQuestion("Αν το 1/5 ενός κιλού καρύδια είναι 14 καρύδια, το κιλό περιέχει 70 καρύδια;", ["Σωστό", "Λάθος"], 0),
+            MultipleChoiceQuestion("Ο αριθμός 13,8432 στρογυλοποιημένος στο πλησιέστερο εκατοστό, γίνεται ίσος με:", ["13,844", "14", "13,843"], 2),
+            MultipleChoiceQuestion("Ο αριθμός 25,62 στρογυλοποιημένος στο πλησιέστερο δέκατο, γίνεται ίσος με:", ["25,7", "25,6", "26"], 1),
+            MultipleChoiceQuestion("Ο αριθμός 1,342 στρογυλοποιημένος στην πλησιέστερη μονάδα, γίνεται ίσος με:", ["1,34", "1,35", "1,4", "1", "1,3"], 3),
+        ]
+        
+        stack = self.parentWidget()
+        question = QuestionWidget(questions)
+        stack.addWidget(question)
+        stack.setCurrentWidget(question)
+
 
     def Back(self) -> None:
         """Go back to main page.

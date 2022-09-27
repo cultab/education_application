@@ -224,7 +224,7 @@ class QuestionWidget(QWidget):
 
         # add handlers
         self.next.clicked.connect(self.goto_next)
-        self.prev.clicked.connect(self.goto_prev)
+        self.prev.clicked.connect(self.goto_prev)        
 
     def goto_next(self):
         """Handle going to next question."""
@@ -235,6 +235,7 @@ class QuestionWidget(QWidget):
 
         if not stack.currentIndex() + 1 < stack.count():
             self.next.setText("Υποβολή")
+            self.next.clicked.disconnect(self.goto_next)
             self.next.clicked.connect(self.submit)
 
     def goto_prev(self):
@@ -242,6 +243,7 @@ class QuestionWidget(QWidget):
         stack: QStackedWidget = self.stack
         if stack.currentIndex() - 1 >= 0:
             stack.setCurrentIndex(stack.currentIndex() - 1)
+            self.next.clicked.disconnect(self.goto_next)
             self.next.clicked.connect(self.goto_next)
             self.next.setText("Επόμμενη")
             self.next.setEnabled(True)
