@@ -3,6 +3,7 @@
 
 from typing import Protocol
 
+from PyQt5 import QtGui
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
                              QListWidget, QListWidgetItem, QPushButton,
                              QRadioButton, QStackedWidget, QVBoxLayout,
@@ -64,9 +65,9 @@ class FillBlankQuestionWidget(QWidget):
     question: FillBlankQuestion
     answer: list[QLineEdit]
 
-    def __init__(self, question: FillBlankQuestion):
+    def __init__(self, question: FillBlankQuestion, *args, **kwargs):
         """Initialize a FillBlankQuestionWidget."""
-        super().__init__()
+        super(FillBlankQuestionWidget, self).__init__(*args, **kwargs)
 
         self.question = question
         self.answer = list()
@@ -138,9 +139,9 @@ class MultipleChoiceQuestionWidget(QWidget):
     question: MultipleChoiceQuestion
     radio_buttons: list[QRadioButton]
 
-    def __init__(self, question: MultipleChoiceQuestion):
+    def __init__(self, question: MultipleChoiceQuestion, *args, **kwargs):
         """Initialize a MultipleChoiceQuestionWidget."""
-        super().__init__()
+        super(MultipleChoiceQuestionWidget, self).__init__(*args, **kwargs)
 
         self.question = question
         self.size = 2
@@ -291,7 +292,7 @@ class OverviewQuestionWidget(QWidget):
 
         # add question prompt
         prompt = WrapLabel(question.prompt)
-        prompt.setStyleSheet("color: indigo; font-weight: bold")
+        prompt.setStyleSheet("color: indigo; font-weight: bold; font-size: 120%;")
         right.addWidget(prompt)
 
         # add question details based on question's type
@@ -350,10 +351,15 @@ class OverviewQuestionWidget(QWidget):
 
                 correct = WrapLabel(question.choices[question.correct])
                 correct.setStyleSheet("color: seagreen; font-weight: bold")
+                no_answer = WrapLabel("Χωρίς Απάντηση")
+                no_answer.setStyleSheet("color: goldenrod; font-weight: bold")
 
                 if question.answer == question.choices[question.correct]:
                     horizontal.addWidget(correct_label, 0)
                     flow.addWidget(correct)
+                elif not question.answer:
+                    horizontal.addWidget(wrong_label, 0)
+                    flow.addWidget(no_answer)
                 else:
                     horizontal.addWidget(wrong_label, 0)
                     false = WrapLabel(question.answer)

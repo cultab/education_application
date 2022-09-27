@@ -87,7 +87,8 @@ class FirstWindow(QMainWindow):
 def main():
     """."""
     app = QApplication(argv)
-    app.setStyleSheet(open("style.css").read())
+    with open("style.css") as css_file:
+        app.setStyleSheet(css_file.read())
     window = FirstWindow()
     window.show()
     app.exec()

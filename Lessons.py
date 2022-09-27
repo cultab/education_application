@@ -1,6 +1,10 @@
-from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+"""Lesson screen."""
+
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
+from PyQt5 import QtCore, QtGui
 
 from Chapters import ChaptersWidget
+from MenuButton import MenuButton
 
 
 class LessonsWidget(QWidget):
@@ -13,10 +17,12 @@ class LessonsWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        lesson1 = QPushButton('Μάθημα 1')
-        lesson2 = QPushButton('Μάθημα 2')
-        lesson3 = QPushButton('Μάθημα 3')
-        back = QPushButton('Πίσω')
+        lesson1 = MenuButton('Φυσικοί Αριθμοί', "lessons")
+        lesson2 = MenuButton('Κλάσματα', "lessons")
+        lesson3 = MenuButton('Δεκαδικοί Αριθμοί', "lessons")
+        back = MenuButton('Πίσω')
+        back.setIcon(QtGui.QIcon("./resources/back.png"))
+        back.setIconSize(QtCore.QSize(180, 180))
 
         layout.addWidget(lesson1)
         layout.addWidget(lesson2)

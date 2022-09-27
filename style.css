@@ -11,14 +11,28 @@ MenuButton:hover {
         border: 10px solid black;
 }
 
-QPushButton#exercises {
+MenuButton#exercises {
     background-image: url(./resources/Hourglass_512.png);
 }
 
-QPushButton#lessons {
+MenuButton#lessons {
     background-image: url(./resources/math-seamless_256.jpg);
 }
 
-QPushButton#statistics {
+MenuButton#statistics {
     background-image: url(./resources/calculator_yellow.png);
 }
+
+/* QWidget { */
+/*     width: 10px; */
+/*     font-size: 48pt; */
+/*     background-color: red; */
+/* } */
+/**/
+/* MultipleChoiceQuestionWidget { */
+/*     font-size: 120%; */
+/* } */
+/**/
+/* OverviewQuestionWidget { */
+/*     font-size: 120%; */
+/* } */
