@@ -3,11 +3,10 @@
 
 from typing import Protocol
 
-from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout,
-                             QLineEdit, QListWidget, QListWidgetItem,
-                             QPushButton, QRadioButton, QStackedWidget,
-                             QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
+                             QListWidget, QListWidgetItem, QPushButton,
+                             QRadioButton, QStackedWidget, QVBoxLayout,
+                             QWidget)
 
 from FlowLayout import FlowLayout
 from WrapLabel import WrapLabel

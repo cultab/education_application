@@ -3,13 +3,13 @@
 import os
 import re
 
+from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWidgets import QHBoxLayout, QPushButton, QVBoxLayout, QWidget
+
 # from textwrap import indent
 
-from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtCore import QUrl
 
-from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget, QHBoxLayout
-from PyQt5.QtCore import Qt
 
 
 class ChaptersWidget(QWidget):

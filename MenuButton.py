@@ -1,6 +1,6 @@
 """A big button that expands to fill all available space."""
 
-from PyQt5.QtWidgets import QPushButton, QSizePolicy, QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QPushButton, QSizePolicy
 
 
 class MenuButton(QPushButton):

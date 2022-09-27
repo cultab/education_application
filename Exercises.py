@@ -1,5 +1,6 @@
 """Exercises window."""
-from PyQt5.QtWidgets import (QVBoxLayout, QPushButton, QWidget)
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+
 from Question import FillBlankQuestion, MultipleChoiceQuestion, QuestionWidget
 
 

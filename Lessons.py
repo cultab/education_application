@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+
 from Chapters import ChaptersWidget
+
 
 class LessonsWidget(QWidget):
     """Widget that displays rich text documents in pages."""

@@ -3,12 +3,9 @@
 
 from sys import argv
 
-from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow,
-                             QMessageBox,
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMessageBox,
                              QStackedWidget, QVBoxLayout, QWidget)
-
-from PyQt5 import QtGui
-from PyQt5 import QtCore
 
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
