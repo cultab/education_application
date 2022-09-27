@@ -2,14 +2,16 @@
 
 * TODO:
 
+  - [ ] popups (on question widget constructor, optional argument with the message)
   - [ ] Statistics
   - [ ] Final Test
   - [ ] Help/About/Misc menubar buttons polish
-  - [ ] Big Beautiful Buttons
+  - [-]  Big Beautiful Buttons
   - [x]  2.2 exer
   - [x] 3.1 exer
-  - [-] Right Wrong no response default
+  - [x] Right Wrong no response default
   - [x] Formatting fill in the blanks
+
 
 
 * Future Goals if needed:
