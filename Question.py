@@ -276,7 +276,7 @@ class QuestionWidget(QWidget):
 
         stack = self.parentWidget()
 
-        widget = OverviewWidget(answered)
+        widget = OverviewListWidget(answered)
         stack.addWidget(widget)
         stack.setCurrentWidget(widget)
         # remove QuestionWidget
@@ -323,29 +323,27 @@ class OverviewQuestionWidget(QWidget):
                 all_false = True
                 for c in letters:
                     match c:
-                        case "&" | "\n":
-                            match c:
-                                case "&":
-                                    answer = question.answer[i]
-                                    correct = question.correct[i]
-                                    ans = WrapLabel(answer)
-                                    cor = WrapLabel(correct)
-                                    cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
-                                    if text:
-                                        flow.addWidget(WrapLabel(text))
-                                        text = ""
-                                        if answer == correct:
-                                            all_false = False
-                                            ans.setStyleSheet("color: seagreen; font-weight: bold")
-                                        else:
-                                            all_correct = False
-                                            ans.setStyleSheet("color: crimson; font-weight: bold")
-                                            flow.addWidget(cor)
+                        case "&":
+                            answer = question.answer[i]
+                            correct = question.correct[i]
+                            ans = WrapLabel(answer)
+                            cor = WrapLabel(correct)
+                            cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
+                            if text:
+                                flow.addWidget(WrapLabel(text))
+                                text = ""
+                                if answer == correct:
+                                    all_false = False
+                                    ans.setStyleSheet("color: seagreen; font-weight: bold")
+                                else:
+                                    all_correct = False
+                                    ans.setStyleSheet("color: crimson; font-weight: bold")
+                                    flow.addWidget(cor)
 
-                                        flow.addWidget(ans)
-                                        i += 1
-                                case "\n":
-                                    flow.newRow()
+                                flow.addWidget(ans)
+                                i += 1
+                        case "\n":
+                            flow.newRow()
                         case _:
                             text = text + c
                 else:
@@ -390,12 +388,12 @@ class OverviewQuestionWidget(QWidget):
         horizontal.addLayout(right, 100)
 
 
-class OverviewWidget(QListWidget):
+class OverviewListWidget(QListWidget):
     """Widget that contains a list of OverviewQuestionWidgets."""
 
     def __init__(self, questions: list[Question]):
         """Initialize OverviewWidget with a list of Questions."""
-        super(OverviewWidget, self).__init__()
+        super(OverviewListWidget, self).__init__()
 
         # layout = QVBoxLayout()
         # self.setLayout(layout)
@@ -417,7 +415,6 @@ class OverviewWidget(QListWidget):
         item.setSizeHint(back.sizeHint())
         self.addItem(item)
         self.setItemWidget(item, back)
-        # layout.addWidget(back)
 
     def Back(self) -> None:
         """Go back to main page.
