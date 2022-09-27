@@ -27,8 +27,12 @@ class Question(Protocol):
     correct: str | list[str]
     answer: str | list[str]
 
+    def isCorrect() -> bool:
+        """Return whether the question has the correct answer."""
+        raise NotImplementedError("Question is a protocol and has no implementation of isCorrect().")
 
-class FillBlankQuestion():  # TODO: maybe do splitting here, also newline handling
+
+class FillBlankQuestion():
     """
     A fill-in-the-blanks question.
 
@@ -57,6 +61,10 @@ class FillBlankQuestion():  # TODO: maybe do splitting here, also newline handli
     def __repr__(self):
         """Return string representation."""
         return f"{self.prompt=} {self.text=} {self.correct=} {self.answer=}"
+
+    def isCorrect(self, index: int) -> bool:
+        """Return whether a subquestion has the correct answer."""
+        return self.answer[index] == self.correct[index]
 
 
 class FillBlankQuestionWidget(QWidget):
@@ -131,6 +139,12 @@ class MultipleChoiceQuestion():
     def __repr__(self) -> str:
         """Return string representation."""
         return f"{self.prompt} {self.choices} -> {self.choices[self.correct]}"
+
+    def isCorrect(self) -> bool:
+        """Return whether the question has the correct answer."""
+        if self.answer == self.choices[self.correct]:
+            return True
+        return False
 
 
 class MultipleChoiceQuestionWidget(QWidget):
@@ -225,7 +239,7 @@ class QuestionWidget(QWidget):
 
         # add handlers
         self.next.clicked.connect(self.goto_next)
-        self.prev.clicked.connect(self.goto_prev)        
+        self.prev.clicked.connect(self.goto_prev)
 
     def goto_next(self):
         """Handle going to next question."""
