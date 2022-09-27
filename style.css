@@ -22,17 +22,3 @@ MenuButton#lessons {
 MenuButton#statistics {
     background-image: url(./resources/calculator_yellow.png);
 }
-
-/* QWidget { */
-/*     width: 10px; */
-/*     font-size: 48pt; */
-/*     background-color: red; */
-/* } */
-/**/
-/* MultipleChoiceQuestionWidget { */
-/*     font-size: 120%; */
-/* } */
-/**/
-/* OverviewQuestionWidget { */
-/*     font-size: 120%; */
-/* } */
