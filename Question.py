@@ -322,7 +322,7 @@ class OverviewQuestionWidget(QWidget):
                 labels: list[QWidget] = list()
                 for answer, correct in zip(question.answer, question.correct):
                     if answer == correct:
-                        self.marks += 1
+                        self.marks += 1/len(question.correct)
                         all_false = False
                         label = WrapLabel(answer)
                         label.setStyleSheet("color: seagreen; font-weight: bold")
@@ -411,6 +411,8 @@ class OverviewListWidget(QListWidget):
         # self.setResizeMode(QListWidget.Adjust)
         # self.setSelectionRectVisible(True)
 
+        total_marks = 0
+        
         for question in questions:
             overview_widget = OverviewQuestionWidget(question)  # question widget
             # layout.addWidget(widget)
@@ -418,6 +420,7 @@ class OverviewListWidget(QListWidget):
             item.setSizeHint(overview_widget.sizeHint())
             self.addItem(item)
             self.setItemWidget(item, overview_widget)  # associate item with widget
+            total_marks += overview_widget.marks
 
         back = QPushButton("Τέλος Άσκησης")
         back.clicked.connect(self.Back)
@@ -426,10 +429,10 @@ class OverviewListWidget(QListWidget):
         self.addItem(item)
         self.setItemWidget(item, back)
 
-        total_marks = overview_widget.marks / len(questions)
-
+        percentage_marks = total_marks / len(questions)
+        print(percentage_marks, total_marks, len(questions))
         with open(getcwd() + "/results.csv", 'a') as results:
-            results.write(f'"{question_set}",{total_marks}\n')
+            results.write(f'"{question_set}",{percentage_marks}\n')
 
 
 
