@@ -11,6 +11,7 @@ packages = [{include = "education_application"}]
 python = "^3.10"
 PyQt5 = "5.15.2"
 PyQtWebEngine = "5.15.2"
+pandas = "^1.5.0"
 
 
 [build-system]

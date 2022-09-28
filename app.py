@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMessageBox,
 from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 from MenuButton import MenuButton
+from Statistics import StatisticsWidget
 
 
 class FirstWindow(QMainWindow):
@@ -49,10 +50,11 @@ class FirstWindow(QMainWindow):
         statistics = MenuButton('Στατιστικά', "statistics")
 
         def openStatistics() -> None:
-            alert = QMessageBox()
-            alert.setText('You clicked Στατιστικά!')
-            alert.exec()
-            exercises.clicked.connect(openStatistics)
+            widget = StatisticsWidget()
+            self.centralWidget().addWidget(widget)
+            self.centralWidget().setCurrentWidget(widget)
+
+        statistics.clicked.connect(openStatistics)
         layout.addWidget(statistics)
 
         exit_app = MenuButton('Έξοδος', "exit")
