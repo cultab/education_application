@@ -2,6 +2,7 @@
 """Multiple choice questions."""
 
 from typing import Protocol
+from os import getcwd
 
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
@@ -189,7 +190,7 @@ class MultipleChoiceQuestionWidget(QWidget):
 class QuestionWidget(QWidget):
     """Widget that displays questions."""
 
-    def __init__(self, questions: list[any]):
+    def __init__(self, questions: list[any], question_set: str):
         """
         Initialize a QuestionWidget.
 
@@ -198,7 +199,7 @@ class QuestionWidget(QWidget):
         super().__init__()
 
         self.questions = questions
-        self.correctAnswers = 0
+        self.name = question_set
         self.stack = QStackedWidget()
 
         if not len(questions) > 1:
@@ -276,7 +277,7 @@ class QuestionWidget(QWidget):
 
         stack = self.parentWidget()
 
-        widget = OverviewListWidget(answered)
+        widget = OverviewListWidget(answered, self.name)
         stack.addWidget(widget)
         stack.setCurrentWidget(widget)
         # remove QuestionWidget
@@ -284,11 +285,12 @@ class QuestionWidget(QWidget):
 
 
 class OverviewQuestionWidget(QWidget):
-    """Widget that shows the results of a set of questions."""
+    """Widget that shows the results a single question."""
 
     def __init__(self, question: Question):
         """Initialize an OverviewQuestionWidget."""
         super(OverviewQuestionWidget, self).__init__()
+        self.marks = 0
         horizontal = QVBoxLayout()
 
         self.setLayout(horizontal)
@@ -315,32 +317,46 @@ class OverviewQuestionWidget(QWidget):
                 flow = FlowLayout()
                 right.addLayout(flow)
 
+                all_correct = True
+                all_false = True
+                labels: list[QWidget] = list()
+                for answer, correct in zip(question.answer, question.correct):
+                    if answer == correct:
+                        self.marks += 1
+                        all_false = False
+                        label = WrapLabel(answer)
+                        label.setStyleSheet("color: seagreen; font-weight: bold")
+                        labels.append([label])
+                    else:
+                        all_correct = False
+                        correction = list()
+                        label = WrapLabel(answer)
+                        label.setStyleSheet("color: crimson; font-weight: bold")
+                        correction.append(label)
+                        label = WrapLabel(correct)
+                        label.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
+                        correction.append(label)
+                        labels.append(correction)
+
+                if all_correct:
+                    horizontal.addWidget(correct_label, 0)
+                elif all_false:
+                    horizontal.addWidget(wrong_label, 0)
+                else:
+                    horizontal.addWidget(middle_label, 0)
+
                 letters = [*question.text]
 
                 text = ""
                 i = 0
-                all_correct = True
-                all_false = True
                 for c in letters:
                     match c:
                         case "&":
-                            answer = question.answer[i]
-                            correct = question.correct[i]
-                            ans = WrapLabel(answer)
-                            cor = WrapLabel(correct)
-                            cor.setStyleSheet("color: seagreen; background-color: black; font-weight: bold")
                             if text:
                                 flow.addWidget(WrapLabel(text))
                                 text = ""
-                                if answer == correct:
-                                    all_false = False
-                                    ans.setStyleSheet("color: seagreen; font-weight: bold")
-                                else:
-                                    all_correct = False
-                                    ans.setStyleSheet("color: crimson; font-weight: bold")
-                                    flow.addWidget(cor)
-
-                                flow.addWidget(ans)
+                                for label in labels[i]:
+                                    flow.addWidget(label)
                                 i += 1
                         case "\n":
                             flow.newRow()
@@ -349,13 +365,6 @@ class OverviewQuestionWidget(QWidget):
                 else:
                     if text:
                         flow.addWidget(WrapLabel(text))
-
-                if all_correct:
-                    horizontal.addWidget(correct_label, 0)
-                elif all_false:
-                    horizontal.addWidget(wrong_label, 0)
-                else:
-                    horizontal.addWidget(middle_label, 0)
 
             case MultipleChoiceQuestion():
                 flow = FlowLayout()
@@ -366,7 +375,8 @@ class OverviewQuestionWidget(QWidget):
                 no_answer = WrapLabel("Χωρίς Απάντηση")
                 no_answer.setStyleSheet("color: goldenrod; font-weight: bold")
 
-                if question.answer == question.choices[question.correct]:
+                if question.isCorrect():
+                    self.marks += 1
                     horizontal.addWidget(correct_label, 0)
                     flow.addWidget(correct)
                 elif not question.answer:
@@ -391,7 +401,7 @@ class OverviewQuestionWidget(QWidget):
 class OverviewListWidget(QListWidget):
     """Widget that contains a list of OverviewQuestionWidgets."""
 
-    def __init__(self, questions: list[Question]):
+    def __init__(self, questions: list[Question], question_set: str):
         """Initialize OverviewWidget with a list of Questions."""
         super(OverviewListWidget, self).__init__()
 
@@ -402,12 +412,12 @@ class OverviewListWidget(QListWidget):
         # self.setSelectionRectVisible(True)
 
         for question in questions:
-            widget = OverviewQuestionWidget(question)  # question widget
+            overview_widget = OverviewQuestionWidget(question)  # question widget
             # layout.addWidget(widget)
             item = QListWidgetItem(self)
-            item.setSizeHint(widget.sizeHint())
+            item.setSizeHint(overview_widget.sizeHint())
             self.addItem(item)
-            self.setItemWidget(item, widget)  # associate item with widget
+            self.setItemWidget(item, overview_widget)  # associate item with widget
 
         back = QPushButton("Τέλος Άσκησης")
         back.clicked.connect(self.Back)
@@ -415,6 +425,13 @@ class OverviewListWidget(QListWidget):
         item.setSizeHint(back.sizeHint())
         self.addItem(item)
         self.setItemWidget(item, back)
+
+        total_marks = overview_widget.marks
+
+        with open(getcwd() + "/results.csv", 'a') as results:
+            results.write(f'"{question_set}",{total_marks}\n')
+
+
 
     def Back(self) -> None:
         """Go back to main page.

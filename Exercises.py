@@ -81,7 +81,7 @@ class ExercisesWidget(QWidget):
         ]
 
         stack = self.parentWidget()
-        question = QuestionWidget(questions)
+        question = QuestionWidget(questions, "fractions")
         stack.addWidget(question)
         stack.setCurrentWidget(question)
 
@@ -146,7 +146,7 @@ class ExercisesWidget(QWidget):
         ]
 
         stack = self.parentWidget()
-        question = QuestionWidget(questions)
+        question = QuestionWidget(questions, "naturals")
         stack.addWidget(question)
         stack.setCurrentWidget(question)
 
@@ -194,7 +194,7 @@ class ExercisesWidget(QWidget):
         ]
 
         stack = self.parentWidget()
-        question = QuestionWidget(questions)
+        question = QuestionWidget(questions, "decimals")
         stack.addWidget(question)
         stack.setCurrentWidget(question)
 
@@ -242,7 +242,7 @@ class ExercisesWidget(QWidget):
         ]
 
         stack = self.parentWidget()
-        question = QuestionWidget(questions)
+        question = QuestionWidget(questions, "final")
         stack.addWidget(question)
         stack.setCurrentWidget(question)
 

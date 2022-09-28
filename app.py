@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Education application."""
 
+import os
+
 from sys import argv
 
 from PyQt5 import QtCore, QtGui
@@ -86,6 +88,18 @@ class FirstWindow(QMainWindow):
 
 def main():
     """."""
+    results_path = os.getcwd() + "/results.csv"
+
+    def init_results_file():
+        with open(results_path, 'w') as results:  # open results and write the header
+            results.write('"Question Set", "Marks"\n')
+
+    try:
+        if os.path.getsize(results_path) == 0:  # if file is empty
+            init_results_file()
+    except FileNotFoundError:  # or does not exist
+        init_results_file()
+
     app = QApplication(argv)
     with open("style.css") as css_file:
         app.setStyleSheet(css_file.read())
