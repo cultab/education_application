@@ -426,7 +426,7 @@ class OverviewListWidget(QListWidget):
         self.addItem(item)
         self.setItemWidget(item, back)
 
-        total_marks = overview_widget.marks
+        total_marks = overview_widget.marks / len(questions)
 
         with open(getcwd() + "/results.csv", 'a') as results:
             results.write(f'"{question_set}",{total_marks}\n')
