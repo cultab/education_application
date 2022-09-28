@@ -107,7 +107,7 @@ def main():
 
     def init_results_file():
         with open(results_path, 'w') as results:  # open results and write the header
-            results.write('"Question Set", "Marks"\n')
+            results.write('"Question Set","Marks"\n')  # IMPORTANT: no spaces
 
     try:
         if os.path.getsize(results_path) == 0:  # if file is empty
