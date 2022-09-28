@@ -85,6 +85,19 @@ class FirstWindow(QMainWindow):
         exitButton.triggered.connect(exit)
         fileMenu.addAction(exitButton)
 
+        helpMenu = mainMenu.addMenu("Help")
+        helpButton = QAction("Βοήθεια", self)
+        helpMenu.addAction(helpButton)
+        aboutButton = QAction('About', self)
+        helpMenu.addAction(aboutButton)
+
+        def about() -> None:
+            alert = QMessageBox()
+            alert.setText("""Έκδοση: 0.5.0
+E-mail Επικοινωνίας: cs131118@uniwa.gr/cs171014@uniwa.gr""")
+            alert.exec()
+
+        aboutButton.triggered.connect(about)
 
 def main():
     """."""
