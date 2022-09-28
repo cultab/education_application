@@ -438,6 +438,10 @@ class OverviewListWidget(QListWidget):
             alert = QMessageBox()
             alert.setText("""Συγχαρητήρια! \nΒρήκες τα περισσότερα σωστά!""")
             alert.exec()
+        elif (percentage_marks < 0.45):
+            alert = QMessageBox()
+            alert.setText("""Δυστυχώς κόπηκες... Διάβασε τη θεωρία πιο προσεκτικά και δοκίμασε ξανά!""")
+            alert.exec()
         # print(percentage_marks, total_marks, len(questions))
         with open(getcwd() + "/results.csv", 'a') as results:
             results.write(f'"{question_set}",{percentage_marks}\n')
