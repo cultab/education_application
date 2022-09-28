@@ -8,7 +8,7 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
                              QListWidget, QListWidgetItem, QPushButton,
                              QRadioButton, QStackedWidget, QVBoxLayout,
-                             QWidget)
+                             QWidget, QMessageBox)
 
 from FlowLayout import FlowLayout
 from WrapLabel import WrapLabel
@@ -430,7 +430,15 @@ class OverviewListWidget(QListWidget):
         self.setItemWidget(item, back)
 
         percentage_marks = total_marks / len(questions)
-        print(percentage_marks, total_marks, len(questions))
+        if (percentage_marks == 1):
+            alert = QMessageBox()
+            alert.setText("""Συγχαρητήρια! \nΤα βρήκες όλα σωστά!""")
+            alert.exec()
+        elif (percentage_marks > 0.8):
+            alert = QMessageBox()
+            alert.setText("""Συγχαρητήρια! \nΒρήκες τα περισσότερα σωστά!""")
+            alert.exec()
+        # print(percentage_marks, total_marks, len(questions))
         with open(getcwd() + "/results.csv", 'a') as results:
             results.write(f'"{question_set}",{percentage_marks}\n')
 
