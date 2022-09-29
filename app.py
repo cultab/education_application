@@ -110,6 +110,7 @@ E-mail Επικοινωνίας: cs131118@uniwa.gr/cs171014@uniwa.gr""")
 
         aboutButton.triggered.connect(about)
 
+
 def main():
     """."""
     results_path = os.getcwd() + "/results.csv"
