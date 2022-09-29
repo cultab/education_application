@@ -1,7 +1,7 @@
 * TODO:
 
-  - [ ] popups (on question widget constructor, optional argument with the message)
-  - [-] Statistics
+  - [x] popups
+  - [x] Statistics
   - [x] Final Test
   - [ ] Help/About/Misc menubar buttons polish
   - [x] Big Beautiful Buttons
@@ -13,6 +13,7 @@
 
 
 * Future Goals if needed:
+  - (on question widget constructor, optional argument with the message)
   - KateX for math display in QtwebView
   - Installer
   - Lesson packages
