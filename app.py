@@ -116,6 +116,10 @@ def main():
     def init_results_file():
         with open(results_path, 'w') as results:  # open results and write the header
             results.write('"Question Set","Marks"\n')  # IMPORTANT: no spaces
+            results.write('"naturals",\n')
+            results.write('"decimals",\n')
+            results.write('"fractions",\n')
+            results.write('"final",\n')
 
     try:
         if os.path.getsize(results_path) == 0:  # if file is empty
