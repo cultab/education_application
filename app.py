@@ -13,6 +13,7 @@ from Exercises import ExercisesWidget
 from Lessons import LessonsWidget
 from MenuButton import MenuButton
 from Statistics import StatisticsWidget
+import webbrowser
 
 
 class FirstWindow(QMainWindow):
@@ -90,6 +91,13 @@ class FirstWindow(QMainWindow):
         helpMenu = mainMenu.addMenu("Help")
         helpButton = QAction("Βοήθεια", self)
         helpMenu.addAction(helpButton)
+
+        def help() -> None:
+            path='/home/asimakis/Desktop/test.pdf'
+            webbrowser.open_new(path)
+
+        helpButton.triggered.connect(help)
+        
         aboutButton = QAction('About', self)
         helpMenu.addAction(aboutButton)
 
