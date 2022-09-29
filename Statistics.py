@@ -66,12 +66,17 @@ class StatisticsWidget(QWidget):
 
     def setLabels(self, marks):
         """Set the labels to the correct mark."""
-        marks = [f"{x:.2f}".split('.')[1] for x in marks]
+        new_marks = list()
+        for mark in marks:
+            try:
+                new_marks.append(f"{mark:.2f}".split('.')[1])
+            except IndexError:
+                new_marks.append("0")
 
-        self.marks_naturals.setText(marks[0] + "/100")
-        self.marks_decimals.setText(marks[1] + "/100")
-        self.marks_fractions.setText(marks[2] + "/100")
-        self.marks_final.setText(marks[3] + "/100")
+        self.marks_naturals.setText(new_marks[0] + "/100")
+        self.marks_decimals.setText(new_marks[1] + "/100")
+        self.marks_fractions.setText(new_marks[2] + "/100")
+        self.marks_final.setText(new_marks[3] + "/100")
 
 
     def showAverages(self):
