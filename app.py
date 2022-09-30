@@ -62,6 +62,7 @@ class FirstWindow(QMainWindow):
         exit_app.setIcon(QtGui.QIcon("./resources/illustration-exit-door_53876-5844.jpg"))
         exit_app.setIconSize(QtCore.QSize(180, 180))
         exit_app.setProperty("cssClass", "bigButton")
+        exit_app.setStyleSheet("MenuButton { background: white; }")
 
         def exit() -> None:
             reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
@@ -97,7 +98,7 @@ class FirstWindow(QMainWindow):
             webbrowser.open_new(path)
 
         helpButton.triggered.connect(help)
-        
+
         aboutButton = QAction('About', self)
         helpMenu.addAction(aboutButton)
 

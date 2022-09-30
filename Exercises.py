@@ -2,7 +2,7 @@
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
 from PyQt5 import QtCore, QtGui
 
-from Question import FillBlankQuestion, MultipleChoiceQuestion, QuestionWidget
+from Question import FillBlankQuestion, MultipleChoiceQuestion, QuestionWidget, QMessageBox
 
 from MenuButton import MenuButton
 
@@ -80,10 +80,15 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("5/5 = 41/41", ["Σωστό", "Λάθος"], 0),
         ]
 
-        stack = self.parentWidget()
-        question = QuestionWidget(questions, "fractions")
-        stack.addWidget(question)
-        stack.setCurrentWidget(question)
+        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+        if reply == QMessageBox.Yes:
+            stack = self.parentWidget()
+            question = QuestionWidget(questions, "fractions")
+            stack.addWidget(question)
+            stack.setCurrentWidget(question)            
+        elif reply == QMessageBox.No:
+            pass
 
     def Exercises1(self):
         """First set of exercises."""
@@ -145,10 +150,16 @@ class ExercisesWidget(QWidget):
 (β) Πότε γεννήθηκε ο πατέρας του; & """, ["39", "1958"]),
         ]
 
-        stack = self.parentWidget()
-        question = QuestionWidget(questions, "naturals")
-        stack.addWidget(question)
-        stack.setCurrentWidget(question)
+        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+        if reply == QMessageBox.Yes:
+            stack = self.parentWidget()
+            question = QuestionWidget(questions, "naturals")
+            stack.addWidget(question)
+            stack.setCurrentWidget(question)            
+        elif reply == QMessageBox.No:
+            pass
+
 
     def Exercises3(self):
         """Third set of exercises."""
@@ -193,10 +204,16 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("Ο αριθμός 13,8432 στρογυλοποιημένος στο πλησιέστερο εκατοστό, γίνεται ίσος με:", ["13,844", "14", "13,843"], 2),
         ]
 
-        stack = self.parentWidget()
-        question = QuestionWidget(questions, "decimals")
-        stack.addWidget(question)
-        stack.setCurrentWidget(question)
+        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+        if reply == QMessageBox.Yes:
+            stack = self.parentWidget()
+            question = QuestionWidget(questions, "decimals")
+            stack.addWidget(question)
+            stack.setCurrentWidget(question)            
+        elif reply == QMessageBox.No:
+            pass
+
 
     def Exercises4(self) -> None:
         """Excercises for the final exam."""
@@ -241,10 +258,16 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("Ο αριθμός 1,342 στρογυλοποιημένος στην πλησιέστερη μονάδα, γίνεται ίσος με:", ["1,34", "1,35", "1,4", "1", "1,3"], 3),
         ]
 
-        stack = self.parentWidget()
-        question = QuestionWidget(questions, "final")
-        stack.addWidget(question)
-        stack.setCurrentWidget(question)
+        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+        if reply == QMessageBox.Yes:
+            stack = self.parentWidget()
+            question = QuestionWidget(questions, "final")
+            stack.addWidget(question)
+            stack.setCurrentWidget(question)            
+        elif reply == QMessageBox.No:
+            pass
+
 
     def Back(self) -> None:
         """Go back to main page.
