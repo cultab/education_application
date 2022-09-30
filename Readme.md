@@ -230,8 +230,8 @@ Event handler για κλικ πάνω στο κουμπί About. Εμφανίζ
 Παρέχει ένα **QLayout** το οποίο εμφανίζει τα widget του σε γραμμές
 ανάλογα με τον διαθέσιμο χώρο. Σε περίπτωση που ένα widget δεν χωράει
 στην τελευταία γραμμή, προστίθεται στην επόμενη. Η κώδικας είναι
-μετάφραση του (C++
-παραδείγματος)\[<https://doc.qt.io/qt-6/qtwidgets-layouts-flowlayout-example.html>\]
+μετάφραση του [C++
+παραδείγματος](https://doc.qt.io/qt-6/qtwidgets-layouts-flowlayout-example.html)
 που παρέχεται από το documentation του Qt6 σε Python με μια επιπλέον
 λειτουργία.
 
