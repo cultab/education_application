@@ -81,7 +81,7 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("5/5 = 41/41", ["Σωστό", "Λάθος"], 0),
         ]
 
-        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        reply = QMessageBox.question(self, "Continue?", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
             stack = self.parentWidget()
@@ -151,7 +151,7 @@ class ExercisesWidget(QWidget):
 (β) Πότε γεννήθηκε ο πατέρας του; & """, ["39", "1958"]),
         ]
 
-        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        reply = QMessageBox.question(self, "Continue?", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
             stack = self.parentWidget()
@@ -205,7 +205,7 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("Ο αριθμός 13,8432 στρογυλοποιημένος στο πλησιέστερο εκατοστό, γίνεται ίσος με:", ["13,844", "14", "13,843"], 2),
         ]
 
-        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        reply = QMessageBox.question(self, "Continue?", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
             stack = self.parentWidget()
@@ -259,7 +259,7 @@ class ExercisesWidget(QWidget):
             MultipleChoiceQuestion("Ο αριθμός 1,342 στρογυλοποιημένος στην πλησιέστερη μονάδα, γίνεται ίσος με:", ["1,34", "1,35", "1,4", "1", "1,3"], 3),
         ]
 
-        reply = QMessageBox.question(self, "QMessageBox.question()", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        reply = QMessageBox.question(self, "Continue?", "Όσο λύνεις τις ασκήσεις δεν θα μπορείς να γυρίσεις πίσω. Σίγουρα θέλεις να συνεχίσεις;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
         if reply == QMessageBox.Yes:
             stack = self.parentWidget()

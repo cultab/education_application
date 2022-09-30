@@ -65,7 +65,7 @@ class FirstWindow(QMainWindow):
         exit_app.setStyleSheet("MenuButton { background: white; }")
 
         def exit() -> None:
-            reply = QMessageBox.question(self, "QMessageBox.question()", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            reply = QMessageBox.question(self, "Exit ?", "Σίγουρα θέλεις να τερματήσεις την εφαρμογή;", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
             if reply == QMessageBox.Yes:
                 self.close()
@@ -80,7 +80,7 @@ class FirstWindow(QMainWindow):
         stacked.addWidget(widget)
 
         self.setCentralWidget(stacked)
-        self.setWindowTitle("TEST")
+        self.setWindowTitle("Ηλεκτρονική Μάθηση")
 
         # MenuBar
         mainMenu = self.menuBar()
@@ -104,6 +104,7 @@ class FirstWindow(QMainWindow):
 
         def about() -> None:
             alert = QMessageBox()
+            alert.setWindowTitle("About!")
             alert.setText("""Έκδοση: 0.5.0
 E-mail Επικοινωνίας: cs131118@uniwa.gr/cs171014@uniwa.gr""")
             alert.exec()
