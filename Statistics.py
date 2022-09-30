@@ -82,7 +82,6 @@ class StatisticsWidget(QWidget):
         self.marks_fractions.setText(new_marks[2] + "/100")
         self.marks_final.setText(new_marks[3] + "/100")
 
-
     def showAverages(self):
         """Show average results."""
         self.avg.setEnabled(False)

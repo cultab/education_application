@@ -1,7 +1,17 @@
+@document.meta
+title: todo
+description: 
+authors: evan
+categories: 
+created: 2022-09-30
+version: 0.0.12
+@end
+
 * TODO:
 
-  - [ ] popups (on question widget constructor, optional argument with the message)
-  - [-] Statistics
+  - [x] popups
+  - [ ] back button statistics
+  - [x] Statistics
   - [x] Final Test
   - [ ] Help/About/Misc menubar buttons polish
   - [x] Big Beautiful Buttons
@@ -13,6 +23,7 @@
 
 
 * Future Goals if needed:
+  - (on question widget constructor, optional argument with the message)
   - KateX for math display in QtwebView
   - Installer
   - Lesson packages

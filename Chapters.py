@@ -7,10 +7,6 @@ from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QHBoxLayout, QPushButton, QVBoxLayout, QWidget
 
-# from textwrap import indent
-
-
-
 
 class ChaptersWidget(QWidget):
 
@@ -54,11 +50,8 @@ class ChaptersWidget(QWidget):
             regex = "lesson" + str(chapNumber) + r".*"
             if re.match(regex, file):
                 self.files.append(QUrl.fromLocalFile(path + file))
-                # print(f"Loaded {file=}")
 
         self.viewer.setUrl(self.files[0])
-
-
 
     def PreviousButton(self) -> None:
         """."""
@@ -72,7 +65,6 @@ class ChaptersWidget(QWidget):
 
     def NextButton(self) -> None:
         """."""
-        # print(f"{self.index=} {len(self.files)=}")
         if self.index < len(self.files) - 1:
             self.index += 1
             self.viewer.setUrl(self.files[self.index])
@@ -81,7 +73,6 @@ class ChaptersWidget(QWidget):
         if self.index == (len(self.files) - 1):
             self.next.setEnabled(False)
 
-    
     def Back(self) -> None:
         """Go back to main page.
 
@@ -89,9 +80,6 @@ class ChaptersWidget(QWidget):
         """
         parent = self.parentWidget()
 
-        # print(parent.currentIndex())
         old_widget = parent.currentWidget()
         parent.setCurrentIndex(parent.currentIndex() - 1)
         parent.removeWidget(old_widget)
-        
-
