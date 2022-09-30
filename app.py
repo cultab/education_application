@@ -20,7 +20,8 @@ class FirstWindow(QMainWindow):
     """Main window."""
 
     def __init__(self) -> None:
-        """Initialize the FirstWindow.
+        """
+        Initialize the FirstWindow.
 
         Initialize the layout, encapsulate in a QStackedWidget and set it as the central Widget.
         """
@@ -94,7 +95,8 @@ class FirstWindow(QMainWindow):
         helpMenu.addAction(helpButton)
 
         def help() -> None:
-            path='/home/asimakis/Desktop/test.pdf'
+            path = os.getcwd() + "/path_relative_to_app.py/the.pdf"
+            path = '/home/asimakis/Desktop/test.pdf'
             webbrowser.open_new(path)
 
         helpButton.triggered.connect(help)

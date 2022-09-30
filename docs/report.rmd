@@ -1,0 +1,583 @@
+---
+title: "Τεχνικό Εγχειρίδιο Ανάλυσης και Σχεδιασμού"
+subtitle: |
+    | Πανεπιστήμιο Δυτικής Αττικής
+    | Τμήμα Μηχανικών Πληροφορικής και Υπολογιστών
+    | \includegraphics{./img/logo.jpg}
+    | Ηλεκτρονική Μάθηση
+author: | 
+    | Ευάγγελος Κατσανδρής (cs171014@uniwa.gr)
+    | Ασημάκης Αργυρόπουλος (cs131118@uniwa.gr)
+date: "`r Sys.setlocale('LC_TIME', 'el_GR.utf8'); format(Sys.time(), '%d %B, %Y')`"
+output: 
+    bookdown::pdf_document2:
+        template: eisvogel
+        highlight: kate
+        latex_engine: lualatex
+        number_sections: false
+        toc: false
+        citation_package: biblatex
+        # pandoc_args: [ "--listings" ]
+    bookdown::html_document2:  # disable html output by default
+        fig_caption: true
+        number_sections: true
+        pandoc_args: [ "--listings" ]
+    md_document:
+        variant: "gfm"
+        toc: true
+        number_sections: true
+        pandoc_args: [ "--listings" ]
+bibliography: bibliography.bib
+biblatexoptions: sorting=none
+lang: el
+mainfont: Liberation Serif
+sansfont: Liberation Sans
+monofont: Source Code Pro
+#mathfont: DejaVu Math TeX Gyre
+fontsize: 11pt
+geometry: margin=2.5cm
+code-block-font-size: \footnotesize
+table-use-row-colors: true
+titlepage: true
+titlepage-rule-color: 123c64
+titlepage-rule-height: 10
+caption-justification: centering
+toc-own-page: false
+header-includes:
+    \newfontfamily\greekfont{LiberationSerif}
+    \newfontfamily\greekfontsf{LiberationSerif}
+    \newfontfamily\greekfonttt{LiberationMono}
+    \usepackage{float}
+    \usepackage{subcaption}
+    \usepackage{pgf}
+    \usepackage{tikz}
+    \usepackage{tikzscale}
+    \usepackage{pgfplots}
+    \usepackage{chngcntr}
+    \counterwithin{figure}{section}
+    \pgfplotsset{compat=1.17}
+    \usepackage{svg}
+    \usepackage{multicol}
+    \usepackage{xcolor}
+    \usepackage{tocloft}
+    \usepackage{drawstack}
+    \definecolor{uniwalightblue}{RGB}{103, 173, 224}
+    \definecolor{uniwablue}{RGB}{18, 60, 100}
+    \definecolor{uniwaorange}{RGB}{230, 124, 23}
+    \definecolor{light-gray}{gray}{0.95}
+    \usepackage{hyperref}
+    \hypersetup{
+        linkcolor  = uniwalightblue,
+        citecolor  = uniwaorange,
+        urlcolor   = uniwablue,
+        colorlinks = true,
+    }
+    \urlstyle{same}
+---
+
+<!-- Cache of copy-paste'ables {{{-->
+
+<!-- section renaming# {{{ -->
+<!-- \renewcommand{\thesubsection}{Δραστηριότητα\space\arabic{subsection}:} -->
+<!-- \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}} -->
+<!-- \addtolength{\cftsubsecnumwidth}{6em}# }}} -->
+
+<!-- latex figure with subfigures# {{{ -->
+<!-- \begin{figure}[H] -->
+<!-- \centering -->
+<!--     \begin{subfigure}[b]{\textwidth} -->
+<!--     \centering -->
+<!--         \includegraphics[width=\textwidth]{} -->
+<!--         \caption{} -->
+<!--     \end{subfigure} -->
+<!--     \begin{subfigure}[b]{\textwidth} -->
+<!--     \centering -->
+<!--         \includegraphics[width=\textwidth]{} -->
+<!--         \caption{} -->
+<!--     \end{subfigure} -->
+<!--     \caption{} -->
+<!--     \label{} -->
+<!-- \end{figure} -->
+<!-- }}} -->
+
+<!-- python code then output# {{{ -->
+<!-- ```{r setup} -->
+<!-- CACHE <- FALSE -->
+<!-- ``` -->
+<!-- ```{python, code=readLines("file"), results='asis', cache=USE_CACHE, cache.extra = tools::md5sum('./file')} -->
+<!-- ``` -->
+<!-- ```{python, code=readLines("file"), eval=FALSE} -->
+<!-- ``` -->
+<!-- ## Αποτελέσματα -->
+<!---->
+<!-- ```{python, code=readLines("file"), echo=FALSE, results='asis', cache=USE_CACHE, cache.extra = tools::md5sum('./file')} -->
+<!-- ``` -->
+<!-- }}} -->
+
+<!-- }}} -->
+
+<!-- \renewcommand*{\lstlistlistingname}{Κατάλογος Κώδικα} -->
+<!-- \renewcommand*{\lstlistingname}{Κώδικας} -->
+
+\newcommand\autonameref[1]{\autoref{#1}, {\nameref{#1}}}
+
+\newcommand{\code}[1]{\colorbox{light-gray}{\texttt#1}}
+
+\tableofcontents
+
+<!-- \listoffigures -->
+
+<!-- \listoftables -->
+
+<!-- \lstlistoflistings -->
+
+\newpage
+
+# Εισαγωγή
+
+Σε αυτό το εγχειρίδιο θα αναλυθεί συνοπτικά η δομή της εφαρμογής και του project όπως
+και η διαδικασία επέκτασης της εφαρμογής. Η δομή της εφαρμογής θα αναλυθεί μέσω από
+τις αλληλεπιδράσεις των διαφόρων συναρτήσεων και αντικειμένων της. Η δομή του project θα
+αναλυθεί μέσω των εργαλείων που χρειάζονται για την ανάπτυξη και επέκταση της εφαρμογής.
+Τέλος θα δοθεί μια καθαρή αρχή για όποιον προτίθεται να επεκτάσει την εφαρμογή.
+
+Το παρόν εγχειρίδιο έχει γραφτεί σε Rmarkdown [@Rmd] [@RmdDG] [@RmdCB].
+
+# Δομή του Project
+
+Η διαχείριση πηγαίου κώδικα του πρότζεκτ γίνεται με git [@progit].
+Η διαχείριση των dependencies του πρότζεκτ γίνεται με poetry [@poetry]
+
+Η βασική δομή των αρχείων του πρότζεκτ είναι η παρακάτω.
+
+```
+education_application
+├── app.py
+├── resources
+│  ├── lessons
+│  │  ├── img
+│  │  │  └── <εικόνες για html αρχεία μαθημάτων>
+│  │  ├── style.css
+│  │  └── <αρχεία html μαθημάτων>
+│  └── <εικόνες για το UI>
+├── style.css
+├── results.csv
+├── Chapters.py
+├── Exercises.py
+├── FlowLayout.py
+├── Lessons.py
+├── MenuButton.py
+├── Question.py
+├── Statistics.py
+├── WrapLabel.py
+├── poetry.lock
+├── pyproject.toml
+├── LICENSE
+└── todo.norg
+```
+
+Στο root του φακέλου βρίσκονται  τα αρχεία πηγαίου κώδικα python, το css του UI, τα αρχεία του poetry και
+ο φάκελος resources. Ο φάκελος resources περιέχει όλα τα αρχεία που φορτώνονται από το UI όπως και τον φάκελο lessons.
+O φάκελος lessons περιέχει όλο το υλικό των μαθημάτων σε HTML μορφή και επιπλέον εικόνες στο φάκελο img.
+
+\newpage
+
+# Δομή της εφαρμογής
+
+Σε αυτή την ενότητα θα αναλυθούν οι συναρτήσεις και τα αντικείμενα της εφαρμογής.
+
+## class FirstWindow(QMainWindow)
+
+Το αρχικό παράθυρο της εφαρμογής. Παρέχει 4 MenuButtons, για Μαθήματα, Ασκήσεις,
+Στατιστικά και έξοδο. Επίσης παρέχει ένα MenuBar με ένα κουμπί Help (ανοίγει το εγχειρίδιο χρήστη) και ένα About (εμφανίζει έκδοση και πληροφορίες επικοινωνίας).
+
+### init() -> None
+
+Κατασκευαστής, δεν παίρνει ορίσματα.
+
+### openLessons() -> None
+
+Event handler για κλικ πάνω στο κουμπί Μαθημάτων. Αλλάζει το centralWidget
+του FirstWindow σε ένα **LessonsWidget**.
+
+### openExercises() -> None
+
+Event handler για κλικ πάνω στο κουμπί Ασκήσεων. Αλλάζει το centralWidget
+του FirstWindow σε ένα **ExercisesWidget**.
+
+### openStatistics() -> None
+
+Event handler για κλικ πάνω στο κουμπί Στατιστικών. Αλλάζει το centralWidget
+του FirstWindow σε ένα **StatisticsWidget**.
+
+### exit() -> None
+
+Event handler για κλικ πάνω στο κουμπί Έξοδος.
+Ανοίγει ένα διάλογο ναι/όχι και σε περίπτωση ναι, τερματίζει την εφαρμογή.
+
+### help() -> None
+
+Event handler για κλικ πάνω στο κουμπί Help.
+Ανοίγει το εγχειρίδιο χρήστη.
+
+### about() -> None
+
+Event handler για κλικ πάνω στο κουμπί About.
+Εμφανίζει την έκδοση της εφαρμογής και πληροφορίες επικοινωνίας.
+
+\newpage
+
+## class FlowLayout(QLayout)
+
+Παρέχει ένα **QLayout** το οποίο εμφανίζει τα widget του σε γραμμές
+ανάλογα με τον διαθέσιμο χώρο. Σε περίπτωση που ένα widget δεν χωράει στην τελευταία
+γραμμή, προστίθεται στην επόμενη.
+Η κώδικας είναι μετάφραση του (C++ παραδείγματος)[https://doc.qt.io/qt-6/qtwidgets-layouts-flowlayout-example.html] που παρέχεται από το documentation του Qt6 σε Python με μια επιπλέον λειτουργία.
+
+### init(margin=-1, hSpacing=-1, vSpacing=-1, *args, **kwargs)
+
+Κατασκευαστής.
+
+* margin: *int*
+  **default = -1**
+  Το εσωτερικό κενό του χώρου του Layout και των widget του.
+* hSpacing: *int*
+  **default = -1**
+  Το οριζόντιο κενό μεταξύ των widget του Layout.
+* vSpacing: *int*
+  **default = -1**
+  Το κάθετο κενό μεταξύ των widget του Layout.
+
+### addItem(item: QLayoutItem) -> None
+
+Προσθέτει ένα item στο Layout.
+
+* item: *QLayoutItem*
+  Το item που θα προστεθεί.
+
+
+### newRow() -> None
+
+Προσθέτει ένα **QSpacerItem** μηδενικού μεγέθους.
+Δεν υπάρχει στην C++ έκδοση του κώδικα.
+Αναγκάζει τα widget που θα προστεθούν μετά από την κλήση της,
+να πάνε στην επόμενη σειρά, ανεξαρτήτου εάν χωρούσαν στην τελευταία ή όχι.
+
+\newpage
+
+## class Question(Protocol)
+
+Ορίζει ένα **Protocol** (implicit interface) για το τι
+πρέπει να περιέχουν οι κλάσεις που θεωρούνται **Question**.
+
+* prompt: *str*
+  Το κείμενο της ερώτησης
+
+* correct: *int | list[str]*
+    Η σωστή απάντηση/απαντήσεις της ερώτησης
+
+* answer: *str | list[str]*
+  Η απάντηση/απαντήσεις που θα έχει δώσει ο χρήστης
+
+### isCorrect() -> bool
+
+Συνάρτηση που θα πρέπει να επιστρέφει True όταν οι απαντήσεις του χρήστη είναι σωστές,
+False διαφορετικά.
+
+\newpage
+
+## class FillBlankQuestion()
+
+Υλοποίηση του **Question(Protocol)**. Ορίζει μια ερώτηση τύπου συμπλήρωσε-τα-κενά.
+
+* answer: *list[str]*
+  Οι απαντήσεις που θα έχει δώσει ο χρήστης
+
+### init(prompt: str, text: str, correct: list[str]) -> None
+
+* prompt: *str*
+  Το κείμενο της ερώτησης
+
+* correct: *list[str]*
+  Οι σωστές απαντήσεις της ερώτησης
+
+* text: *str*
+  Το κείμενο της ερώτησης που περιέχει τα κενά που ο χρήστης πρέπει να γεμίσει.
+  Ο χαρακτήρας ᾽&᾽ μέσα στο κείμενο ορίζει ένα κενό προς γέμισμα.
+
+### isCorrect(index: int) -> bool
+
+Επιστέφει True εάν η ερώτηση που δεικτοδοτήται από το index έχει απαντηθεί σωστά από
+τον χρήστη.
+
+\newpage
+
+## class FillBlankQuestionWidget(QWidget)
+
+* answer: *list[QLineEdit]
+  Λίστα των πεδίων που ο χρήστης θα πρέπει γεμίσει.
+
+### init(question: FillBlankQuestion, *args, **kwargs)
+
+* question: *FillBlankQuestion*
+  Η ερώτηση του widget.
+
+Κατασκευαστής, γεμίζει το **answer** με τα QLineEdit.
+
+### getQuestion() -> FillBlankQuestion
+
+Επιστρέφει την ερώτηση του widget με τις απαντήσεις του χρήστη.
+
+\newpage
+
+## class MultipleChoiceQuestion()
+
+Υλοποίηση του **Question(Protocol)**. Ορίζει μια ερώτηση τύπου επέλεξε-το-σωστό.
+
+* answer: *str*
+  Η απάντηση που θα δώσει ο χρήστης
+
+### init(self, prompt: str, choices: list[str], correct: int):t
+
+* prompt: *str*
+  Η ερώτηση.
+* choices: *list[str]*
+  Οι επιλογές που δίνονται στον χρήστη
+* correct: *int*
+  Ο δείκτης της σωστής επιλογής στη λίστα των επιλογών
+
+\newpage
+
+## class MultipleChoiceQuestion(QWidget)
+
+### init(question: MultipleChoiceQuestion, *args, **kwargs)
+
+* question: *MultipleChoiceQuestion*
+  Η ερώτηση του widget.
+
+### getQuestion() -> MultipleChoiceQuestion
+
+Επιστρέφει την ερώτηση του widget με τις απαντήσεις του χρήστη.
+
+\newpage
+
+## class QuestionWidget(QWidget)
+
+Widget που εμφανίζει ερωτήσεις και δύο κουμπιά για να προχωράει
+ο χρήστης στην επόμενη και να πάει πίσω.
+
+### init(questions: list[Question], question_set: str)
+
+* questions: *list[Question]*
+  Η λίστα των ερωτήσεων που θα παρουσιαστούν στον χρήστη
+* question_set: *str*
+  Αναγνωριστικό για το σύνολο των ερωτήσεων, χρησιμοποιείται για τα στατιστικά.
+
+### goto_next() -> None
+
+Event handler για το κουμπί εμφάνισης επόμενης ερώτησης.
+Στην περίπτωση που ο χρήστης βρίσκεται στην προτελευταία ερώτηση
+η συνάρτηση επίσης αλλάζει τον Event handler του κουμπιού ώστε να χρησιμοποιεί
+την συνάρτηση **submit()**.
+
+### goto_prev() -> None
+
+Event handler για το κουμπί εμφάνισης προηγούμενης ερώτησης.
+
+### submit() -> None
+
+Event handler για το κουμπί υποβολής.
+Μαζεύει τις ερωτήσεις με τις απαντήσεις του χρήστη και δημιουργεί
+ένα **OverviewListWidget** με αυτές.
+
+\newpage
+
+## class OverviewListWidget(QListWidget)
+
+Widget που εμφανίζει στον χρήστη τα αποτελέσματα της άσκησής του.
+
+### init(questions: list[Question], question_set: str)
+
+* questions: *list[Question]*
+  Λίστα ερωτήσεων που έχουν απαντηθεί (δηλαδή που έχουν προκύψει από μια συνάρτηση **getQuestion()**)
+
+* question_set: *str*
+  Αναγνωριστικό για το σύνολο των ερωτήσεων, χρησιμοποιείται για τα στατιστικά.
+
+Για κάθε ερώτηση στη λίστα questions φτιάχνει ένα **OverviewQuestionWidget** και
+το εμφανίζει. Μετά ανακτεί της μονάδες που κέρδισε ο χρήστης από κάθε **OverviewQuestionWidget**, εμφανίζει ένα μήνυμα επιτυχίας/αποτυχίας και
+γράφει τα αποτελέσματα στο αρχείο `results.csv` με το αναγνωριστικό **question_set**.
+
+
+### Back() -> None
+
+Event handler για το κουμπί επιστροφής στην σελίδα επιλογής ασκήσεων.
+
+\newpage
+
+## class OverviewQuestionWidget(QWidget)
+
+Widget που εμφανίζει αν μια ερώτηση είναι σωστά απαντημένη όπως
+και την σωστή απάντηση σε περίπτωση λάθος απάντησης.
+Υποστηρίζει MultipleChoiceQuestion και FillBlankQuestion.
+
+### init(question: Question)
+
+Κατασκευαστής.
+
+* question: *Question*
+  Η ερώτηση του widget.
+
+\newpage
+
+## class ExercisesWidget(QWidget)
+
+Widget που εμφανίζει 3 **MenuButton** για 3 διαφορετικά σετ ασκήσεων και
+ένα **MenuButton** που επιστρέφει στην αρχική σελίδα.
+
+### Exercises[1-3]() -> None
+
+Οι συναρτήσεις Exercises[1-3] είναι event handlers των **MenuButton**
+και φτιάχνουν ένα σετ ασκήσεων που χρησιμοποιούν για να φτιάξουν ένα **QuestionWidget**.
+
+### Back() -> None
+
+Event handler για το κουμπί επιστροφής στην αρχική σελίδα.
+
+\newpage
+
+## class LessonsWidget(QWidget)
+
+Widget που εμφανίζει 3 **MenuButton** για 3 διαφορετικά σετ θεωρίας και
+ένα **MenuButton** που επιστρέφει στην αρχική σελίδα.
+
+Τα κουμπιά έχουν event handler που καλούν την συνάρτηση *LoadLessons()*
+με το σωστό αναγνωριστικό κεφάλαιο που τους αντιστοιχεί όπως φαίνεται παρακάτω.
+
+```py
+lesson1.clicked.connect(lambda _: self.LoadLessons(1))
+lesson2.clicked.connect(lambda _: self.LoadLessons(2))
+lesson3.clicked.connect(lambda _: self.LoadLessons(3))
+```
+
+### LoadLessons(lessonNumber: int) -> None
+
+* lessonNumber: *int* 
+  Το αναγνωριστικό του κεφαλαίου που θα ανοίξει.
+
+Η συνάρτηση δημιουργεί ένα **ChaptersWidget()** χρησιμοποιώντας το
+**lessonNumber** και το εμφανίζει.
+
+### Back() -> None
+
+Event handler για το κουμπί επιστροφής στην αρχική σελίδα.
+
+\newpage
+
+## class ChaptersWidget(QWidget)
+
+Widget το οποίο εμφανίζει ένα webview στο οποίο φορτώνουμε τα αρχεία
+θεωρίας των μαθημάτων.
+Παρέχει 2 κουμπιά ώστε ο χρήστης να επιλέγει την σελίδα που θέλει να διαβάσει και 
+ένα κουμπί που τον επιστρέφει την σελίδα επιλογής θεωρίας.
+
+### init(ChapNumber: int)
+
+* ChapNumber: *int*
+  Αριθμός κεφάλαιου.
+
+### LoadChapter(ChapNumber: int) -> None
+
+* chapNumber: *int*
+  Αριθμός κεφάλαιου.
+
+Φορτώνει τα μονοπάτια των αρχείων θεωρίας που βρίσκονται στον φάκελο
+`/resources/lessons/` και ακολουθούν την κανονική έκφραση "lesson<chapNumber>.*"^[lesson<n>.*: αρχίζει με τους χαρακτήρες 'lesson' και ακολουθείτε από έναν αριθμό n].
+
+### PreviousButton() και NextButton()
+
+Event handlers για τα κουμπιά εμφάνισης επόμενης και προηγούμενης σελίδας.
+Αλλάζουν το αρχείο που εμφανίζεται στο webview.
+
+### Back() -> None
+
+Event handler για το κουμπί επιστροφής στην σελίδα επιλογής κεφαλαίου.
+
+\newpage
+
+## class Statistics(QWidget)
+
+Widget που εμφανίζει στατιστικά για τα διαγωνίσματα του χρήστη.
+
+### setLabels(marks: list[float])
+
+* marks: *list[float]*
+  Λίστα βαθμών
+
+Ενημερώνει το UI με τους βαθμούς στο **marks**.
+
+### showAverages() -> None
+
+Υπολογίζει τους μέσους όρους των βαθμών και καλεί την **setLabels()**.
+
+### showLatest() -> None
+
+Βρίσκει τους πιο πρόσφατους βαθμούς και καλεί την **setLabels()**.
+
+### showBest() -> None
+
+Υπολογίζει τους μέγιστους βαθμούς και καλεί την **setLabels()**.
+
+\newpage
+
+# Διαδικασία Επέκτασης
+
+Η εφαρμογή μπορεί να επεκταθεί με διάφορους τρόπους προς πολλές κατευθύνσεις. Σε αυτή την
+ενότητα θα δούμε κάποιες από αυτές τις κατευθύνσεις.
+
+## Προαπαιτούμενα και Προϋποθέσεις
+
+Για να επεκταθεί η εφαρμογή υπάρχουν κάποιες προυποθέσεις που πρέπει να τηρηθούν.
+
+### Γνώσεις
+
+* Ανάπτυξη εφαρμογών σε python3
+* Γνώσεις χρήσης qt5 gui framework
+* Γνώσεις χρήσης pandas (για στατιστικά)
+
+### Λογισμικό
+
+* Εγκατάσταση python >= 3.10
+* Εγκατάσταση poetry
+* Εγκατάσταση git
+
+### Άδεια
+
+Παράγωγα έργα **πρέπει** να ακολουθούν τους όρους του AGPLv3 όπως ορίζονται στο 
+αρχείο LICENSE.
+
+## Επιπλέον Υλικό Θεωρίας
+
+Επιπλέον υλικό θεωρίας μπορεί να δημιουργηθεί δημιουργώντας κατάλληλα 
+ονομασμένα αρχεία στον φάκελο `resources/lessons/`. Πιο συγκεκριμένα
+πρέπει να ακολουθούν το πρότυπο "lesson<αριθμόςΚεφαλαίου>.html" με προσοχή
+ότι γίνεται λεξικογραφική ταξινόμηση όπου τα μεγαλύτερα ονόματα έρχονται πρώτα όταν δηλαδή το αρχείο `lesson2.1.html` θα εμφανιστεί πριν το αρχείο `lesson2.html`, έτσι προτείνεται το δεύτερο αρχείο να μετονομαστεί σε `lesson2.0.html`.
+Τέλος θα πρέπει να προστεθεί το αντίστοιχο κουμπί στην κλάση *LessonWidget*
+
+## Επιπλέον Ασκήσεις
+
+Επιπλέον υλικό ασκήσεων μπορεί να δημιουργηθεί στην κλάση **Exercises** με παρόμοιο τρόπο
+όπως οι υπάρχουσες. Προσοχή να δοθεί στο **text** των **FillBlankQuestion** όπου
+οι χαρακτήρες ᾽&᾽ σημαίνουν "κενό προς γέμισμα" και '\\n' νέα γραμμή.
+
+## Επιπλέον Λειτουργικότητα
+
+Η εφαρμογή έχει σχεδιαστεί με την επεκτασιμότητα στο νου άρα οποιαδήποτε
+λειτουργία είναι πιθανός υλοποιήσημη λόγω της modular δομής της. Για παράδειγμα είναι
+πολύ απλό να προστεθεί ένα νέο είδος ερώτησης. Απλά θα χρειαστεί:
+
+* class \<New\>Question
+* class \<New\>QuestionWidget
+* υποστήριξη στην ΟverviewQuestionWidget στο match statement
+
+\newpage

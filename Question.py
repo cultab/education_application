@@ -25,7 +25,7 @@ class Question(Protocol):
     """
 
     prompt: str
-    correct: str | list[str]
+    correct: int | list[str]
     answer: str | list[str]
 
     def isCorrect() -> bool:
@@ -123,10 +123,10 @@ class MultipleChoiceQuestion():
 
     prompt: str
     choices: list[str]
-    correct: list[str]
+    correct: int
     answer: str
 
-    def __init__(self, prompt: str, choices: list[str], correctChoice: str):
+    def __init__(self, prompt: str, choices: list[str], correct: int):
         """
         Initialize a MultipleChoiceQuestion.
 
@@ -134,7 +134,7 @@ class MultipleChoiceQuestion():
         """
         self.prompt = prompt
         self.choices = choices
-        self.correct = correctChoice
+        self.correct = correct
         self.answer = ""
 
     def __repr__(self) -> str:
@@ -190,7 +190,7 @@ class MultipleChoiceQuestionWidget(QWidget):
 class QuestionWidget(QWidget):
     """Widget that displays questions."""
 
-    def __init__(self, questions: list[any], question_set: str):
+    def __init__(self, questions: list[Question], question_set: str):
         """
         Initialize a QuestionWidget.
 

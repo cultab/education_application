@@ -1,6 +1,16 @@
+@document.meta
+title: todo
+description: 
+authors: evan
+categories: 
+created: 2022-09-30
+version: 0.0.12
+@end
+
 * TODO:
 
   - [x] popups
+  - [ ] back button statistics
   - [x] Statistics
   - [x] Final Test
   - [ ] Help/About/Misc menubar buttons polish
