@@ -53,10 +53,14 @@ class StatisticsWidget(QWidget):
         buttons.addWidget(self.last)
         buttons.addWidget(self.best)
 
+        back_Button = QPushButton('Πίσω')
+        back_Button.clicked.connect(self.Back)
+
         layout.addWidget(title)
         layout.addLayout(form)
         layout.addStretch()
         layout.addLayout(buttons)
+        layout.addWidget(back_Button)
         self.setLayout(layout)
 
         self.df = self.load_data()
@@ -135,3 +139,15 @@ class StatisticsWidget(QWidget):
         results_path = getcwd() + "/results.csv"
         df = pd.read_csv(results_path)
         return df
+
+    def Back(self) -> None:
+        """Go back to main page.
+
+        Use the parent widget (QStacked) to set the previous widget as the current; then delete this one
+        """
+        parent = self.parentWidget()
+
+        # print(parent.currentIndex())
+        old_widget = parent.currentWidget()
+        parent.setCurrentIndex(parent.currentIndex() - 1)
+        parent.removeWidget(old_widget)

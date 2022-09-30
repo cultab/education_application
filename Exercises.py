@@ -24,6 +24,7 @@ class ExercisesWidget(QWidget):
         back = MenuButton('Πίσω')
         back.setIcon(QtGui.QIcon("./resources/back.png"))
         back.setIconSize(QtCore.QSize(180, 180))
+        back.setStyleSheet("MenuButton { background: #FFFFFF; }")
 
         layout.addWidget(exc1)
         layout.addWidget(exc2)

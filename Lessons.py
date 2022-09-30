@@ -23,6 +23,8 @@ class LessonsWidget(QWidget):
         back = MenuButton('Πίσω')
         back.setIcon(QtGui.QIcon("./resources/back.png"))
         back.setIconSize(QtCore.QSize(180, 180))
+        back.setStyleSheet("MenuButton { background: #DFFEFC; }")
+
 
         layout.addWidget(lesson1)
         layout.addWidget(lesson2)
