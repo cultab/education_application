@@ -88,6 +88,7 @@ class FillBlankQuestionWidget(QWidget):
         self.answer = list()
         layout = FlowLayout()
         self.setLayout(layout)
+        # layout.setAlignment(Qt.AlignHCenter)
         # self.setStyleSheet("QLabel: { font-size: 48pt; }")
 
         # HACK: you know
@@ -103,12 +104,15 @@ class FillBlankQuestionWidget(QWidget):
                     if text:
                         if c == " ":
                             text = text + c
-                        layout.addWidget(QuestionLabel(text))
+                        q_label = QuestionLabel(text)
+                        # q_label.setAlignment(Qt.AlignHCenter)
+                        layout.addWidget(q_label)
 
                         text = ""
                     match c:
                         case "&":
                             widget = QuestionLineEdit()
+                            widget.setAlignment(Qt.AlignHCenter)
                             layout.addWidget(widget)
                             self.answer.append(widget)
                         case "\n":
@@ -117,7 +121,9 @@ class FillBlankQuestionWidget(QWidget):
                     text = text + c
         else:
             if text:
-                layout.addWidget(QuestionLabel(text))
+                q_label = QuestionLabel(text)
+                # q_label.setAlignment(Qt.AlignHCenter)
+                layout.addWidget(q_label)
 
     def getQuestion(self) -> FillBlankQuestion:
         """Get answered question."""
@@ -174,6 +180,7 @@ class MultipleChoiceQuestionWidget(QWidget):
 
         self.setLayout(box)
         wid = QuestionLabel(self.question.prompt)
+        wid.setAlignment(Qt.AlignCenter)
         wid.setWordWrap(True)
         box.addWidget(wid)
 
@@ -185,6 +192,7 @@ class MultipleChoiceQuestionWidget(QWidget):
         for i, choice in enumerate(self.question.choices):
             radio = QRadioButton(choice)
             grid.addWidget(radio, i - (i % self.size), i % self.size)
+            grid.setAlignment(Qt.AlignHCenter)
             self.radio_buttons.append(radio)
 
     def getQuestion(self) -> MultipleChoiceQuestion:
