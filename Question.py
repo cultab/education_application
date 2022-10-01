@@ -5,6 +5,7 @@ from typing import Protocol
 from os import getcwd
 
 from PyQt5 import QtGui
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
                              QListWidget, QListWidgetItem, QPushButton,
                              QRadioButton, QStackedWidget, QVBoxLayout,
@@ -83,8 +84,8 @@ class FillBlankQuestionWidget(QWidget):
         layout = FlowLayout(0, 0, 0)
         self.setLayout(layout)
 
-        layout.addWidget(WrapLabel(self.question.prompt))
-        layout.newRow()
+        # HACK: you know
+        self.question.text = self.question.prompt + "\n" + self.question.text
 
         letters = [*self.question.text]
 
@@ -92,9 +93,12 @@ class FillBlankQuestionWidget(QWidget):
         widget: QWidget = None
         for c in letters:
             match c:
-                case "&" | "\n":
+                case "&" | "\n" | " ":
                     if text:
+                        if c == " ":
+                            text = text + c
                         layout.addWidget(WrapLabel(text))
+
                         text = ""
                     match c:
                         case "&":
@@ -163,8 +167,9 @@ class MultipleChoiceQuestionWidget(QWidget):
         box = QVBoxLayout()
 
         self.setLayout(box)
-
-        box.addWidget(WrapLabel(self.question.prompt))
+        wid = WrapLabel(self.question.prompt)
+        wid.setWordWrap(True)
+        box.addWidget(wid)
 
         grid = QGridLayout()
         box.addLayout(grid)

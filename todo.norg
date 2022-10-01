@@ -7,13 +7,17 @@ created: 2022-09-30
 version: 0.0.12
 @end
 
+* next:
+  - [x] version
+  - 
+
 * TODO:
 
   - [x] popups
-  - [ ] back button statistics
+  - [x]  back button statistics
   - [x] Statistics
   - [x] Final Test
-  - [ ] Help/About/Misc menubar buttons polish
+  - [x]  Help/About/Misc menubar buttons polish
   - [x] Big Beautiful Buttons
   - [x] 2.2 exer
   - [x] 3.1 exer

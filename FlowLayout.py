@@ -103,7 +103,7 @@ class FlowLayout(QLayout):
 
             match item:
                 case QSpacerItem():
-                    item.setGeometry(QRect(x, y, effectiveRect.x() - x, effectiveRect.y() - y))
+                    # item.setGeometry(QRect(x, y, effectiveRect.x() - x, effectiveRect.y() - y))
                     x = effectiveRect.x()
                     y = y + lineHeight
                     lineHeight = 0

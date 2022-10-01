@@ -1,13 +1,12 @@
 MenuButton {
     font-size: 48pt;
-    color: dimgray;
-    border: 10px solid white;
+    color: black;
+    border: 10px solid dimgray;
     border-radius: 30px;
     font-weight: bold;
 }
 
 MenuButton:hover {
-        color: black;
         border: 10px solid black;
 }
 
