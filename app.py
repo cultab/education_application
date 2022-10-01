@@ -95,8 +95,7 @@ class FirstWindow(QMainWindow):
         helpMenu.addAction(helpButton)
 
         def help() -> None:
-            path = os.getcwd() + "/path_relative_to_app.py/the.pdf"
-            path = '/home/asimakis/Desktop/test.pdf'
+            path = os.getcwd() + "/docs/report.pdf"
             webbrowser.open_new(path)
 
         helpButton.triggered.connect(help)
