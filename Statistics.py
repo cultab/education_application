@@ -4,7 +4,7 @@ import pandas as pd
 
 from os import getcwd
 
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QWidget, QLabel, QFormLayout, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QWidget, QLabel, QFormLayout, QLineEdit, QPushButton, QSpacerItem
 
 
 class StatisticsWidget(QWidget):
@@ -15,9 +15,11 @@ class StatisticsWidget(QWidget):
 
         layout = QVBoxLayout()
         title = QLabel("Αποτελέσματα:")
-        title.setStyleSheet("QLabel {font-size: 18pt;}")
+        title.setStyleSheet("QLabel {font-size: 32pt;}")
 
         form = QFormLayout()
+        form.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
+        self.setStyleSheet("QLabel { font-size: 18pt; } QLineEdit { font-size: 18pt; }")
 
         naturals = QLabel("Φυσικοί:")
         fractions = QLabel("Κλάσματα:")
@@ -57,6 +59,7 @@ class StatisticsWidget(QWidget):
         back_Button.clicked.connect(self.Back)
 
         layout.addWidget(title)
+        layout.addStretch()
         layout.addLayout(form)
         layout.addStretch()
         layout.addLayout(buttons)

@@ -21,3 +21,15 @@ MenuButton#lessons {
 MenuButton#statistics {
     background-image: url(./resources/calculator_yellow.png);
 }
+
+QuestionLabel {
+    font-size: 18pt;
+}
+
+QuestionLineEdit {
+    font-size: 18pt;
+}
+
+QRadioButton {
+    font-size: 18pt;
+}

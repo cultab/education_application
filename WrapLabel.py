@@ -17,7 +17,6 @@ class WrapLabel(QLabel):
         # self.setAlignment(Qt.AlignCenter)
         # self.setWordWrap(True)
         # self.setMinimumWidth(200)
-        self.setStyleSheet("WrapLabel { background-color: red; }")
 
     # def paintEvent(self, event):
     #     """Paint."""
