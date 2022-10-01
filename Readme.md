@@ -3,7 +3,7 @@
 -   [3 Δομή της εφαρμογής](#δομή-της-εφαρμογής)
     -   [3.1 class
         FirstWindow(QMainWindow)](#class-firstwindowqmainwindow)
-        -   [3.1.1 init() -\> None](#init---none)
+        -   [3.1.1 init()](#init)
         -   [3.1.2 openLessons() -\> None](#openlessons---none)
         -   [3.1.3 openExercises() -\> None](#openexercises---none)
         -   [3.1.4 openStatistics() -\> None](#openstatistics---none)
@@ -191,7 +191,7 @@ HTML μορφή και επιπλέον εικόνες στο φάκελο img.
 Help (ανοίγει το εγχειρίδιο χρήστη) και ένα About (εμφανίζει έκδοση και
 πληροφορίες επικοινωνίας).
 
-### 3.1.1 init() -\> None
+### 3.1.1 init()
 
 Κατασκευαστής, δεν παίρνει ορίσματα.
 
@@ -458,7 +458,7 @@ Widget το οποίο εμφανίζει ένα webview στο οποίο φο�
 
 Φορτώνει τα μονοπάτια των αρχείων θεωρίας που βρίσκονται στον φάκελο
 `/resources/lessons/` και ακολουθούν την κανονική έκφραση
-“lesson<chapNumber>.\*“[^1].
+“lesson\<chapNumber\>.\*“[^1].
 
 ### 3.13.3 PreviousButton() και NextButton()
 
